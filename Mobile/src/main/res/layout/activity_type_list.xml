@@ -11,7 +11,7 @@
         android:id="@+id/inputSearch"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:hint="Search products.."
+        android:hint="@string/search_text"
         android:inputType="textVisiblePassword" />
 
     <!-- List View -->
@@ -19,5 +19,4 @@
         android:id="@android:id/list"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
-
 </LinearLayout>

@@ -37,12 +37,12 @@ public class TypeListAdapter extends ArrayAdapter<String> {
         }
 
         ImageView imgIcon = (ImageView) convertView.findViewById(R.id.icon);
-        TextView txtType = (TextView) convertView.findViewById(R.id.type);
+        TextView txtTitle = (TextView) convertView.findViewById(R.id.title);
 
         String type = getType(getItem(position));
         // setting the image resource and title
         imgIcon.setImageResource(getIcon(type));
-        txtType.setText(type);
+        txtTitle.setText(type);
 
         return convertView;
     }

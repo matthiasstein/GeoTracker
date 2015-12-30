@@ -1,22 +1,13 @@
 <resources>
     <string name="app_name">GeoTracker</string>
-    <string name="gps_not_available">GPS not available.</string>
-    <string name="ok">OK</string>
-    <string name="acquiring_gps">Acquiring GPS Fix ...</string>
-    <string name="lon">lon:</string>
-    <string name="lat">lat:</string>
-    <string name="speed">speed:</string>
-    <string name="accuracy">accuracy:</string>
-    <string name="homeDistance">distance to home:</string>
-    <string name="conterraDistance">distance to con terra:</string>
     <string name="type">Type</string>
     <string name="settings">Settings</string>
-    <string name="saving_done">Settings set!</string>
-    <string name="saving_aported">Saving aborted</string>
-    <string name="sent_to_phone">Data was sent to mobile!</string>
-    <string name="saving">Saving...</string>
+    <string name="saving_done">Einstellungen gesetzt!</string>
+    <string name="saving_aported">Speichern abgebrochen</string>
+    <string name="sent_to_phone">Daten an das Mobilgerät gesendet!!</string>
+    <string name="saving">Speichere...</string>
     <string name="name">Name:</string>
-    <string name="description">Description:</string>
+    <string name="description">Beschreibung:</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

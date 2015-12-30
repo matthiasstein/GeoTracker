@@ -53,14 +53,12 @@ public class GeoObjectListAdapter extends BaseAdapter {
         }
 
         ImageView imgIcon = (ImageView) convertView.findViewById(R.id.icon);
-        TextView txtName = (TextView) convertView.findViewById(R.id.name);
-        TextView txtType = (TextView) convertView.findViewById(R.id.type);
+        TextView txtTitle = (TextView) convertView.findViewById(R.id.title);
 
         GeoObject go = geoObject.get(position);
         // setting the image resource and title
         imgIcon.setImageResource(getIcon(go.getType()));
-        txtName.setText(go.getName());
-        txtType.setText(go.getType());
+        txtTitle.setText(go.getName() + " - " + go.getType());
 
         return convertView;
     }
