@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">GeoTracker</string>
+    <string name="action_settings">Settings</string>
+    <string name="clear_list">Clear List</string>
+    <string name="title_activity_web_view">WebView</string>
+
+    <string-array name="drawer_array">
+        <item>New GeoObjects</item>
+        <item>map.apps</item>
+        <item>Settings</item>
+    </string-array>
+
+    <string name="title_activity_geo_object">GeoObjectActivity</string>
+    <string name="latitude">Latitude</string>
+    <string name="longitude">Longitude</string>
+    <string name="date">Date</string>
+    <string name="type">Type</string>
+    <string name="name">Name</string>
+    <string name="description">Description</string>
+
+    <string name="delete">Delete</string>
+    <string name="save">Save</string>
+    <string name="upload">Upload</string>
+    <string name="upload_success">Upload successful</string>
+    <string name="upload_error">Upload error</string>
+    <string name="imgdesc">imgdesc</string>
+    <string name="change_type">Change Type</string>
+    <string name="title_activity_type_change">Change Type</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_type_list">TypeListActivity</string>
+</resources>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.wearable.view.BoxInsetLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color1">
+    tools:context=".WearMainActivity"
+    tools:deviceIds="wear"
+    android:padding="0dp">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_box="all">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|center"
+            android:layout_marginBottom="70dp"
+            android:fontFamily="sans-serif-light"
+            android:text="@string/app_name"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            android:textStyle="italic" />
+
+        <ImageButton
+            android:id="@+id/settings"
+            android:layout_width="60px"
+            android:layout_height="60px"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="20dp"
+            android:layout_marginRight="50dp"
+            android:background="@drawable/settings" />
+
+        <ImageButton
+            android:id="@+id/voice_input"
+            android:layout_width="60px"
+            android:layout_height="60px"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="50dp"
+            android:background="@drawable/voice" />
+
+        <android.support.wearable.view.CircledImageView
+            android:id="@+id/rec_button"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:onClick="onRecordButtonClick"
+            android:src="@drawable/circle_red"
+            app:circle_color="@color/white"
+            app:circle_padding="@dimen/circle_padding"
+            app:circle_radius="@dimen/circle_radius"
+            app:circle_radius_pressed="@dimen/circle_radius_pressed" />
+
+        <android.support.wearable.view.CircledImageView
+            android:id="@+id/rec_button_disabled"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_cancel_80"
+            app:circle_color="@color/grey"
+            app:circle_padding="@dimen/circle_padding"
+            app:circle_radius="@dimen/circle_radius"
+            app:circle_radius_pressed="@dimen/circle_radius_pressed" />
+
+        <ImageView
+            android:id="@+id/dot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/circle_green"
+            android:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/clock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:textColor="@android:color/white"
+            app:layout_box="all" />
+    </FrameLayout>
+</android.support.wearable.view.BoxInsetLayout>

@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">shared</string>
+
+    <string-array name="types">
+        <item>XE_Servicestelle Touristinformation 11101000</item>
+        <item>XE_Servicestelle Ticketshop 11101050</item>
+        <item>XE_Servicestelle Infopoint 11101000</item>
+        <item>XE_Servicestelle ServiceStelleOEV 11101000</item>
+        <item>XE_Servicestelle Geldautomat 11101000</item>
+        <item>XE_Servicestelle ServicestelleSonstiges 11101000</item>
+        <item>XE_Servicestelle Post 11101000</item>
+        <item>XE_Servicestelle ToiletteOeffentlich 11101000</item>
+        <item>XE_Servicestelle ToiletteOeffentlichBehindertengerecht 11101000</item>
+        <item>XE_Servicestelle TelefonOeffentlich 11101000</item>
+        <item>XE_Servicestelle TelefonOeffentlichBehindertengerecht 11101000</item>
+    </string-array>
+
+    <array name="icons">
+        <item>@drawable/xe_servicestelle_touristinformation</item>
+        <item>@drawable/xe_servicestelle_ticketshop</item>
+        <item>@drawable/xe_servicestelle_infopoint</item>
+        <item>@drawable/xe_servicestelle_servicestelleoev</item>
+        <item>@drawable/xe_servicestelle_geldautomat</item>
+        <item>@drawable/xe_servicestelle_servicestellesonstiges</item>
+        <item>@drawable/xe_servicestelle_post</item>
+        <item>@drawable/xe_servicestelle_toiletteoeffentlich</item>
+        <item>@drawable/xe_servicestelle_toiletteoeffentlichbehindertengerecht</item>
+        <item>@drawable/xe_servicestelle_telefonoeffentlich</item>
+        <item>@drawable/xe_servicestelle_telefonoeffentlichbehindertengerecht</item>
+    </array>
+</resources>
