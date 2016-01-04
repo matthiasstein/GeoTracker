@@ -65,14 +65,9 @@ public class TypeListActivity extends ListActivity {
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         Intent intent = getIntent();
-        intent.putExtra("type", getType(itemTypes[position]));
+        intent.putExtra("type", itemTypes[position]);
         setResult(RESULT_OK, intent);
         finish();
-    }
-
-    private String getType(String item) {
-        String[] s = item.split(" ");
-        return s[1];
     }
 
 }

@@ -62,7 +62,6 @@ public class WearMainActivity extends WearableActivity implements GoogleApiClien
 
     public static final String PREFS_TYPE_KEY = "type";
     public static final String PREFS_DESC_KEY = "description";
-    //public static final String PREFS_NAME_KEY = "name";
     private static final String GO_KEY = "de.mstein.key.go";
 
     @Override
@@ -151,9 +150,7 @@ public class WearMainActivity extends WearableActivity implements GoogleApiClien
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
         String description = pref.getString(PREFS_DESC_KEY, "");
         String type = pref.getString(PREFS_TYPE_KEY, "GeoObject");
-        //String name = pref.getString(PREFS_NAME_KEY, "name");
-        //String type = "";
-        String name = "New GeoObject";
+        String name = "Neuer POI";
         saveGeoObject(lat, lon, name, type, description);
 
         Intent intent = new Intent(this, ConfirmationActivity.class);
@@ -259,7 +256,7 @@ public class WearMainActivity extends WearableActivity implements GoogleApiClien
         mRecButtonDisabled = findViewById(R.id.rec_button_disabled);
         mRecButtonDisabled.setEnabled(false);
 
-        ImageButton settingsButton = (ImageButton) findViewById(R.id.settings);
+        /*ImageButton settingsButton = (ImageButton) findViewById(R.id.settings);
 
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -268,7 +265,7 @@ public class WearMainActivity extends WearableActivity implements GoogleApiClien
                         TypeListActivity.class);
                 startActivity(intent);
             }
-        });
+        });*/
 
         ImageButton voiceInputButton = (ImageButton) findViewById(R.id.voice_input);
 

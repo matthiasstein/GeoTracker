@@ -78,14 +78,6 @@ public class MainActivity extends AppCompatActivity implements
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                //        .setAction("Action", null).show();
-                // externer Browser
-                Uri uri = Uri.parse("http://www.example.com");
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(intent);
-                Intent intent = new Intent(MainActivity.this, WebSite.class);
-                startActivity(intent);
             }
         });*/
 
@@ -210,9 +202,7 @@ public class MainActivity extends AppCompatActivity implements
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        } else if(id == R.id.clear_list) {
+        if(id == R.id.clear_list) {
             this.geoObjectList.clear();
             this.refreshList();
             this.saveList();

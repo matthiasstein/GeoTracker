@@ -1,23 +1,15 @@
 package de.mstein.geotracker;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.esri.android.map.ags.ArcGISFeatureLayer;
-import com.esri.core.geometry.Point;
-import com.esri.core.map.CallbackListener;
 import com.esri.core.map.FeatureEditResult;
-import com.esri.core.map.FeatureTemplate;
-import com.esri.core.map.Graphic;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -106,12 +98,21 @@ public class GeoObjectActivity extends AppCompatActivity {
     }
 
     public void uploadFeature(View view) {
-        fh.createFeature(mGeoObject);
+        if (!mTypeText.getText().toString().equals("GeoObject")) {
+            mGeoObject = new GeoObject(mGeoObject.getLat(), mGeoObject.getLon(), mNameText.getText().toString(), mTypeText.getText().toString(), mDescriptionText.getText().toString(), mGeoObject.getDate());
+            fh.createFeature(mGeoObject);
+        } else {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(GeoObjectActivity.this, R.string.change_type, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
-    public void changeType(View view) {
+    public void changeDatatype(View view) {
         Intent intent = new Intent(this, TypeListActivity.class);
-        //startActivity(intent);
         startActivityForResult(intent, TYPE_REQUEST);
     }
 
@@ -122,7 +123,7 @@ public class GeoObjectActivity extends AppCompatActivity {
             // Make sure the request was successful
             if (resultCode == RESULT_OK) {
                 Bundle b = data.getExtras();
-                String type= b.getString("type");
+                String type = b.getString("type");
                 mTypeText.setText(type);
             }
         }

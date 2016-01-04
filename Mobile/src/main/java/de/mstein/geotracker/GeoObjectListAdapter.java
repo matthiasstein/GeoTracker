@@ -69,8 +69,7 @@ public class GeoObjectListAdapter extends BaseAdapter {
 
         int result = R.drawable.xe_servicestelle_infopoint;
         for(int i=0;i<itemTypes.length;i++) {
-            String[] s = itemTypes[i].split(" ");
-            String t = s[1];
+            String t = itemTypes[i];
             if(t.equals(type)) {
                 result = itemIcons.getResourceId(i,-1);
             }

@@ -2,30 +2,114 @@
     <string name="app_name">shared</string>
 
     <string-array name="types">
-        <item>XE_Servicestelle Touristinformation 11101000</item>
-        <item>XE_Servicestelle Ticketshop 11101050</item>
-        <item>XE_Servicestelle Infopoint 11101000</item>
-        <item>XE_Servicestelle ServiceStelleOEV 11101000</item>
-        <item>XE_Servicestelle Geldautomat 11101000</item>
-        <item>XE_Servicestelle ServicestelleSonstiges 11101000</item>
-        <item>XE_Servicestelle Post 11101000</item>
-        <item>XE_Servicestelle ToiletteOeffentlich 11101000</item>
-        <item>XE_Servicestelle ToiletteOeffentlichBehindertengerecht 11101000</item>
-        <item>XE_Servicestelle TelefonOeffentlich 11101000</item>
-        <item>XE_Servicestelle TelefonOeffentlichBehindertengerecht 11101000</item>
+        <item>Servicestelle</item>
+        <item>Gastronomie</item>
+        <item>Rast</item>
+        <item>Unterkunft</item>
+        <item>Shopping</item>
+        <item>Museum</item>
+        <item>TheaterMusik</item>
+        <item>Kultureinrichtung</item>
+        <item>Kino</item>
+        <item>Nachtleben</item>
+        <item>Siedlung</item>
+        <item>Bauwerk</item>
+        <item>TechnischesBauwerk</item>
+        <item>Landmarke</item>
+        <item>Aussichtspunkt</item>
+        <item>Gotteshaus</item>
+        <item>Religioeses</item>
+        <item>Denkmal</item>
+        <item>Naturlandschaft</item>
+        <item>Tierwelt</item>
+        <item>Sport</item>
+        <item>Baden</item>
+        <item>Erholung</item>
+        <item>Wegweisung</item>
+        <item>Moeblierung</item>
+        <item>Veranstaltung</item>
+        <item>Veranstaltungsort</item>
+        <item>SchuleAllgemein</item>
+        <item>Weiterbildung</item>
+        <item>Wissenschaft</item>
+        <item>SchuleSpezial</item>
+        <item>Mediathek</item>
+        <item>Behoerde</item>
+        <item>Verband</item>
+        <item>Gesundheit</item>
+        <item>Tiermedizin</item>
+        <item>SozialEinrichtung</item>
+        <item>VerEntsorgungsbetrieb</item>
+        <item>Sammelstelle</item>
+        <item>Militaer</item>
+        <item>OEVHaltestelle</item>
+        <item>Flughafen</item>
+        <item>Autoverkehr</item>
+        <item>Tankstelle</item>
+        <item>Radverkehr</item>
+        <item>Wasserverkehr</item>
+        <item>Rettung</item>
+        <item>Gefahrenstelle</item>
+        <item>Gewerbegebiet</item>
+        <item>Gewerbeimmobilie</item>
+        <item>Logistik</item>
+        <item>Messe</item>
+        <item>Unternehmen</item>
     </string-array>
 
     <array name="icons">
-        <item>@drawable/xe_servicestelle_touristinformation</item>
-        <item>@drawable/xe_servicestelle_ticketshop</item>
-        <item>@drawable/xe_servicestelle_infopoint</item>
-        <item>@drawable/xe_servicestelle_servicestelleoev</item>
-        <item>@drawable/xe_servicestelle_geldautomat</item>
-        <item>@drawable/xe_servicestelle_servicestellesonstiges</item>
-        <item>@drawable/xe_servicestelle_post</item>
-        <item>@drawable/xe_servicestelle_toiletteoeffentlich</item>
-        <item>@drawable/xe_servicestelle_toiletteoeffentlichbehindertengerecht</item>
-        <item>@drawable/xe_servicestelle_telefonoeffentlich</item>
-        <item>@drawable/xe_servicestelle_telefonoeffentlichbehindertengerecht</item>
+        <item>@drawable/xe_servicestelle</item>
+        <item>@drawable/xe_gastronomie</item>
+        <item>@drawable/xe_rast</item>
+        <item>@drawable/xe_unterkunft</item>
+        <item>@drawable/xe_shopping</item>
+        <item>@drawable/xe_museum</item>
+        <item>@drawable/xe_theatermusik</item>
+        <item>@drawable/xe_kultureinrichtung</item>
+        <item>@drawable/xe_kino</item>
+        <item>@drawable/xe_nachtleben</item>
+        <item>@drawable/xe_siedlung</item>
+        <item>@drawable/xe_bauwerk</item>
+        <item>@drawable/xe_technischesbauwerk</item>
+        <item>@drawable/xe_landmarke</item>
+        <item>@drawable/xe_aussichtspunkt</item>
+        <item>@drawable/xe_gotteshaus</item>
+        <item>@drawable/xe_religioeses</item>
+        <item>@drawable/xe_denkmal</item>
+        <item>@drawable/xe_naturlandschaft</item>
+        <item>@drawable/xe_tierwelt</item>
+        <item>@drawable/xe_sport</item>
+        <item>@drawable/xe_baden</item>
+        <item>@drawable/xe_erholung</item>
+        <item>@drawable/xe_wegweisung</item>
+        <item>@drawable/xe_moeblierung</item>
+        <item>@drawable/xe_veranstaltung</item>
+        <item>@drawable/xe_veranstaltungsort</item>
+        <item>@drawable/xe_schuleallgemein</item>
+        <item>@drawable/xe_weiterbildung</item>
+        <item>@drawable/xe_wissenschaft</item>
+        <item>@drawable/xe_schulespezial</item>
+        <item>@drawable/xe_mediathek</item>
+        <item>@drawable/xe_behoerde</item>
+        <item>@drawable/xe_verband</item>
+        <item>@drawable/xe_gesundheit</item>
+        <item>@drawable/xe_tiermedizin</item>
+        <item>@drawable/xe_sozialeinrichtung</item>
+        <item>@drawable/xe_verentsorgungsbetrieb</item>
+        <item>@drawable/xe_sammelstelle</item>
+        <item>@drawable/xe_militaer</item>
+        <item>@drawable/xe_oevhaltestelle</item>
+        <item>@drawable/xe_flughafen</item>
+        <item>@drawable/xe_autoverkehr</item>
+        <item>@drawable/xe_tankstelle</item>
+        <item>@drawable/xe_radverkehr</item>
+        <item>@drawable/xe_wasserverkehr</item>
+        <item>@drawable/xe_rettung</item>
+        <item>@drawable/xe_gefahrenstelle</item>
+        <item>@drawable/xe_gewerbegebiet</item>
+        <item>@drawable/xe_gewerbeimmobilie</item>
+        <item>@drawable/xe_logistik</item>
+        <item>@drawable/xe_messe</item>
+        <item>@drawable/xe_unternehmen</item>
     </array>
 </resources>

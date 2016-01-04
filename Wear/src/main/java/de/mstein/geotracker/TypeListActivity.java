@@ -45,8 +45,7 @@ public class TypeListActivity extends Activity implements WearableListView.Click
 
         mItems = new ArrayList<ListItem>();
         for(int i=0; i<itemTypes.length;i++) {
-            String s[] = itemTypes[i].split(" ");
-            mItems.add(new ListItem(s[1], itemIcons.getResourceId(i, -1)));
+            mItems.add(new ListItem(itemTypes[i], itemIcons.getResourceId(i, -1)));
         }
 
         final TextView header = (TextView) findViewById(R.id.header);
