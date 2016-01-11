@@ -1,7 +1,5 @@
 package de.mstein.shared;
 
-import android.content.res.TypedArray;
-
 import com.google.android.gms.wearable.DataMap;
 
 import java.io.Serializable;

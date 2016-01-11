@@ -21,6 +21,6 @@
     <string-array name="drawer_array">
         <item>Neue POI</item>
         <item>map.apps</item>
-        <item>Settings</item>
+        <item>Info</item>
     </string-array>
 </resources>

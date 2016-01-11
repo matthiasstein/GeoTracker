@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name">shared</string>
-
     <string-array name="types">
         <item>Servicestelle</item>
         <item>Gastronomie</item>
