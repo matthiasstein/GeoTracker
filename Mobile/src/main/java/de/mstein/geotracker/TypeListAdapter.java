@@ -27,9 +27,6 @@ public class TypeListAdapter extends ArrayAdapter<String> {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         if (convertView == null) {
-            /*LayoutInflater mInflater = (LayoutInflater) context
-                    .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-            convertView = mInflater.inflate(R.layout.type_list_item, null);*/
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.type_list_item, parent, false);
         }
 

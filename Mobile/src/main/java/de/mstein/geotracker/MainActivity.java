@@ -74,13 +74,6 @@ public class MainActivity extends AppCompatActivity implements
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
-        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            }
-        });*/
-
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(Wearable.API)
                 .addConnectionCallbacks(this)
@@ -96,8 +89,6 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onFragmentInteraction(int i) {
-        //geoObjectList.remove(i);
-        //saveList();
         GeoObject g = geoObjectList.get(i);
         Bundle b = new Bundle();
         b.putSerializable("list", g);
@@ -122,7 +113,6 @@ public class MainActivity extends AppCompatActivity implements
         Fragment fragment = null;
         FragmentManager fragmentManager = getSupportFragmentManager(); // For AppCompat use getSupportFragmentManager
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        //transaction.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out);
         Fragment oldFragment = getActiveFragment();
 
         switch (position) {

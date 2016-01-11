@@ -57,15 +57,6 @@ public class GeoObjectActivity extends AppCompatActivity {
         Date d = new Date(mGeoObject.getDate());
         mDateText.setText(DATE_FORMAT.format(d));
         mDescriptionText.setText(String.valueOf(mGeoObject.getDescription()));
-
-        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 

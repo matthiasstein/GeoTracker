@@ -34,24 +34,19 @@ import java.util.List;
 public class VoiceInputActivity extends Activity implements
         DelayedConfirmationView.DelayedConfirmationListener {
 
-    private static final int NUM_SECONDS = 5;
+    private static final int NUM_SECONDS = 3;
     private DelayedConfirmationView mDelayedConfirmationView;
-    private TextView mNameTextView;
     private TextView mDescriptionTextView;
-    private TextView mNameTitleTextView;
     private TextView mDescriptionTitleTextView;
     private TextView mSaveText;
-    private static final int NAME_SPEECH_REQUEST_CODE = 0;
-    private static final int DESCRIPTION_SPEECH_REQUEST_CODE = 1;
+    private static final int DESCRIPTION_SPEECH_REQUEST_CODE = 0;
 
     @Override
     public void onCreate(Bundle b) {
         super.onCreate(b);
 
         setContentView(R.layout.voice_input_activity);
-        //mNameTextView = (TextView) findViewById(R.id.name_text);
         mDescriptionTextView = (TextView) findViewById(R.id.description_text);
-        //mNameTitleTextView = (TextView) findViewById(R.id.name_title);
         mDescriptionTitleTextView = (TextView) findViewById(R.id.description_title);
         mSaveText = (TextView) findViewById(R.id.save_text);
 
@@ -59,7 +54,7 @@ public class VoiceInputActivity extends Activity implements
         mDelayedConfirmationView.setListener(this);
         mDelayedConfirmationView.setTotalTimeMs(NUM_SECONDS * 1000);
         showGUI(false);
-        displaySpeechRecognizer("description");
+        displaySpeechRecognizer();
     }
 
     @Override
@@ -75,13 +70,18 @@ public class VoiceInputActivity extends Activity implements
     @Override
     public void onTimerSelected(View v) {
         mDelayedConfirmationView.reset();
+        Intent intent = new Intent(this, ConfirmationActivity.class);
+        intent.putExtra(ConfirmationActivity.EXTRA_ANIMATION_TYPE,
+                ConfirmationActivity.FAILURE_ANIMATION);
+        intent.putExtra(ConfirmationActivity.EXTRA_MESSAGE,
+                getString(R.string.saving_aported));
+        startActivity(intent);
         finish();
     }
 
     @Override
     public void onTimerFinished(View v) {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
-        //pref.edit().putString(WearMainActivity.PREFS_NAME_KEY, (String) mNameTextView.getText()).apply();
         pref.edit().putString(WearMainActivity.PREFS_DESC_KEY, (String) mDescriptionTextView.getText()).apply();
 
         Intent intent = new Intent(this, ConfirmationActivity.class);
@@ -94,20 +94,12 @@ public class VoiceInputActivity extends Activity implements
     }
 
     // Create an intent that can start the Speech Recognizer activity
-    public void displaySpeechRecognizer(String type) {
+    public void displaySpeechRecognizer() {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
                 RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-        switch (type) {
-            case "name":
-                intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Name?");
-                startActivityForResult(intent, NAME_SPEECH_REQUEST_CODE);
-                break;
-            case "description":
-                intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Description?");
-                startActivityForResult(intent, DESCRIPTION_SPEECH_REQUEST_CODE);
-                break;
-        }
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Beschreibung?");
+        startActivityForResult(intent, DESCRIPTION_SPEECH_REQUEST_CODE);
     }
 
     // This callback is invoked when the Speech Recognizer returns.
@@ -119,29 +111,21 @@ public class VoiceInputActivity extends Activity implements
             List<String> results = data.getStringArrayListExtra(
                     RecognizerIntent.EXTRA_RESULTS);
             String spokenText = results.get(0);
-            switch (requestCode) {
-                case NAME_SPEECH_REQUEST_CODE:
-                    displaySpeechRecognizer("description");
-                    mNameTextView.setText(spokenText);
-                    break;
-                case DESCRIPTION_SPEECH_REQUEST_CODE:
-                    mDescriptionTextView.setText(spokenText);
-                    showGUI(true);
-                    mDelayedConfirmationView.start();
-                    break;
+            if (requestCode == DESCRIPTION_SPEECH_REQUEST_CODE) {
+                mDescriptionTextView.setText(spokenText);
+                showGUI(true);
+                mDelayedConfirmationView.start();
             }
         } else {
             finish();
         }
-        super.onActivityResult(requestCode, resultCode, data);
+        //super.onActivityResult(requestCode, resultCode, data);
     }
 
     private void showGUI(boolean b) {
         int view = View.GONE;
-        if(b)
+        if (b)
             view = View.VISIBLE;
-        //mNameTitleTextView.setVisibility(view);
-        //mNameTextView.setVisibility(view);
         mDescriptionTitleTextView.setVisibility(view);
         mDescriptionTextView.setVisibility(view);
         mSaveText.setVisibility(view);

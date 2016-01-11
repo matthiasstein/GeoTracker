@@ -7,7 +7,8 @@
     <string name="saving_done">Einstellungen gesetzt!</string>
     <string name="saving_aported">Speichern abgebrochen!</string>
     <string name="sent_to_phone">Daten an Smartphone gesendet!</string>
-    <string name="saving">Speichere...</string>
+    <string name="saving">Wird gespeichert ...</string>
     <string name="name">Name:</string>
     <string name="description">Beschreibung:</string>
+    <string name="save_description">Beschreibung?</string>
 </resources>
