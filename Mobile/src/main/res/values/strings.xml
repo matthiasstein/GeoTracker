@@ -7,6 +7,7 @@
     <string name="type">Typ:</string>
     <string name="name">Name:</string>
     <string name="description">Beschreibung:</string>
+    <string name="description_hint">Bitte Beschreibung eingeben...</string>
     <string name="delete">Löschen</string>
     <string name="save">Speichern</string>
     <string name="upload">Upload</string>
