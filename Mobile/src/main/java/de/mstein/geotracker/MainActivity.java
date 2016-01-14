@@ -194,11 +194,14 @@ public class MainActivity extends AppCompatActivity implements
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if(id == R.id.clear_list) {
-            this.geoObjectList.clear();
-            this.refreshList();
-            this.saveList();
+        switch (id) {
+            case android.R.id.home:
+                mDrawerLayout.openDrawer(GravityCompat.START);  // OPEN DRAWER
+                return true;
+            case R.id.clear_list:
+                this.geoObjectList.clear();
+                this.refreshList();
+                this.saveList();
         }
 
         return super.onOptionsItemSelected(item);
