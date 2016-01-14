@@ -1,5 +1,6 @@
 package de.mstein.geotracker;
 
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -73,6 +74,8 @@ public class MainActivity extends AppCompatActivity implements
         // toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        mToolbar.setNavigationIcon(R.drawable.ic_drawer);
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(Wearable.API)
@@ -220,18 +223,12 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onDataChanged(DataEventBuffer dataEvents) {
-        for (DataEvent event : dataEvents) {
-            if (event.getType() == DataEvent.TYPE_CHANGED) {
-                // DataItem changed
-                DataItem item = event.getDataItem();
-                if (item.getUri().getPath().compareTo("/geoobject") == 0) {
-                    DataMap dataMap = DataMapItem.fromDataItem(item).getDataMap();
-                    updateData(dataMap.getDataMap(GO_KEY));
-                }
-            } else if (event.getType() == DataEvent.TYPE_DELETED) {
-                // DataItem deleted
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                updateGOFragment();
             }
-        }
+        }, 2000);
     }
 
     @Override
@@ -239,11 +236,7 @@ public class MainActivity extends AppCompatActivity implements
 
     }
 
-    private void updateData(DataMap dm) {
-        GeoObject go = new GeoObject(dm);
-        geoObjectList.add(go);
-        saveList();
-
+    public void updateGOFragment() {
         GeoObjectListFragment goFragment = (GeoObjectListFragment) getSupportFragmentManager().findFragmentByTag("geoObjectFragment");
         if (goFragment != null)
             goFragment.refresh();
