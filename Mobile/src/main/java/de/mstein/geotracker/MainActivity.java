@@ -22,11 +22,7 @@ import android.widget.ListView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.wearable.DataApi;
-import com.google.android.gms.wearable.DataEvent;
 import com.google.android.gms.wearable.DataEventBuffer;
-import com.google.android.gms.wearable.DataItem;
-import com.google.android.gms.wearable.DataMap;
-import com.google.android.gms.wearable.DataMapItem;
 import com.google.android.gms.wearable.Wearable;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -43,7 +39,6 @@ public class MainActivity extends AppCompatActivity implements
         GeoObjectListFragment.OnFragmentInteractionListener {
 
     private GoogleApiClient mGoogleApiClient;
-    private static final String GO_KEY = "de.mstein.key.go";
     public static ArrayList<GeoObject> geoObjectList = new ArrayList<GeoObject>();
     public static final String PREFS_LIST_KEY = "geoObjectList";
 
@@ -88,6 +83,27 @@ public class MainActivity extends AppCompatActivity implements
         if (savedInstanceState == null) {
             selectItem(0);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onStart();
+        mGoogleApiClient.connect();
+        this.refreshList();
+        this.saveList();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        //Wearable.DataApi.removeListener(mGoogleApiClient, this);
+        //mGoogleApiClient.disconnect();
+    }
+
+    @Override
+    public void setTitle(CharSequence title) {
+        mTitle = "GeoTracker - " + title;
+        mToolbar.setTitle(mTitle);
     }
 
     @Override
@@ -147,15 +163,15 @@ public class MainActivity extends AppCompatActivity implements
                 transaction.commit();
                 break;
             case 2:
-                fragment = fragmentManager.findFragmentByTag("settingsFragment");
+                fragment = fragmentManager.findFragmentByTag("infoFragment");
                 if (oldFragment != null)
                     transaction.hide(oldFragment);
                 if (fragment == null) {
-                    transaction.add(R.id.content_frame, new SettingsFragment(), "settingsFragment");
+                    transaction.add(R.id.content_frame, new InfoFragment(), "infoFragment");
                 } else {
                     transaction.show(fragment);
                 }
-                //transaction.replace(R.id.content_frame, new SettingsFragment(), "settingsFragment");
+                //transaction.replace(R.id.content_frame, new InfoFragment(), "infoFragment");
                 transaction.commit();
                 break;
         }
@@ -166,18 +182,22 @@ public class MainActivity extends AppCompatActivity implements
         mDrawerLayout.closeDrawer(mDrawerList);
     }
 
-    @Override
-    public void setTitle(CharSequence title) {
-        mTitle = "GeoTracker - " + title;
-        mToolbar.setTitle(mTitle);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onStart();
-        mGoogleApiClient.connect();
-        this.refreshList();
-        this.saveList();
+    public Fragment getActiveFragment() {
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment fragment;
+        fragment = fm.findFragmentByTag("geoObjectFragment");
+        if (fragment != null)
+            if (fragment.isVisible())
+                return fragment;
+        fragment = fm.findFragmentByTag("webSiteFragment");
+        if (fragment != null)
+            if (fragment.isVisible())
+                return fragment;
+        fragment = fm.findFragmentByTag("infoFragment");
+        if (fragment != null)
+            if (fragment.isVisible())
+                return fragment;
+        return null;
     }
 
     @Override
@@ -214,14 +234,10 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onConnectionSuspended(int i) {
-
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        //Wearable.DataApi.removeListener(mGoogleApiClient, this);
-        //mGoogleApiClient.disconnect();
+    public void onConnectionFailed(ConnectionResult connectionResult) {
     }
 
     @Override
@@ -229,14 +245,11 @@ public class MainActivity extends AppCompatActivity implements
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
-                updateGOFragment();
+                GeoObjectListFragment goFragment = (GeoObjectListFragment) getSupportFragmentManager().findFragmentByTag("geoObjectFragment");
+                if (goFragment != null)
+                    goFragment.refresh();
             }
         }, 2000);
-    }
-
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-
     }
 
     public void updateGOFragment() {
@@ -272,23 +285,5 @@ public class MainActivity extends AppCompatActivity implements
         GeoObjectListFragment fragment = (GeoObjectListFragment) fm.findFragmentByTag("geoObjectFragment");
         if (fragment != null)
             fragment.refresh();
-    }
-
-    public Fragment getActiveFragment() {
-        FragmentManager fm = getSupportFragmentManager();
-        Fragment fragment;
-        fragment = fm.findFragmentByTag("geoObjectFragment");
-        if (fragment != null)
-            if (fragment.isVisible())
-                return fragment;
-        fragment = fm.findFragmentByTag("webSiteFragment");
-        if (fragment != null)
-            if (fragment.isVisible())
-                return fragment;
-        fragment = fm.findFragmentByTag("settingsFragment");
-        if (fragment != null)
-            if (fragment.isVisible())
-                return fragment;
-        return null;
     }
 }
