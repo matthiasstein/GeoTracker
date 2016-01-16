@@ -2,7 +2,7 @@
     <string name="app_name">GeoTracker</string>
     <string name="gps_not_available">GPS nicht verfügbar!</string>
     <string name="ok">OK</string>
-    <string name="type">Typ</string>
+    <string name="type">Kategorie</string>
     <string name="settings">Einstellungen</string>
     <string name="saving_done">Einstellungen gesetzt!</string>
     <string name="saving_aported">Speichern abgebrochen!</string>

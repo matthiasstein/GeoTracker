@@ -4,8 +4,9 @@
     <string name="title_activity_web_view">WebView</string>
     <string name="title_activity_geo_object">GeoObjectActivity</string>
     <string name="date">Datum:</string>
-    <string name="type">Typ:</string>
+    <string name="type">Kategorie:</string>
     <string name="name">Name:</string>
+    <string name="name_hint">Bitte Namen eingeben...</string>
     <string name="description">Beschreibung:</string>
     <string name="description_hint">Bitte Beschreibung eingeben...</string>
     <string name="delete">Löschen</string>
@@ -14,8 +15,8 @@
     <string name="upload_success">Upload erfolgreich!</string>
     <string name="upload_error">Upload fehlgeschlagen!</string>
     <string name="imgdesc">imgdesc</string>
-    <string name="change_type_button">Datentyp ändern</string>
-    <string name="change_type">Vor dem Upload den Datenyp ändern!</string>
+    <string name="change_type_button">Kategorie ändern</string>
+    <string name="change_type">Vor dem Upload die Kategorie ändern!</string>
     <string name="search_text">Nach Typen suchen...</string>
     <string name="title_activity_type_list">TypeListActivity</string>
 

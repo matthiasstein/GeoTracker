@@ -1,5 +1,6 @@
 package de.mstein.geotracker;
 
+import android.content.Context;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -96,8 +97,8 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     protected void onPause() {
         super.onPause();
-        //Wearable.DataApi.removeListener(mGoogleApiClient, this);
-        //mGoogleApiClient.disconnect();
+        Wearable.DataApi.removeListener(mGoogleApiClient, this);
+        mGoogleApiClient.disconnect();
     }
 
     @Override
@@ -245,9 +246,10 @@ public class MainActivity extends AppCompatActivity implements
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
-                GeoObjectListFragment goFragment = (GeoObjectListFragment) getSupportFragmentManager().findFragmentByTag("geoObjectFragment");
+                /*GeoObjectListFragment goFragment = (GeoObjectListFragment) getSupportFragmentManager().findFragmentByTag("geoObjectFragment");
                 if (goFragment != null)
-                    goFragment.refresh();
+                    goFragment.refresh();*/
+                refreshList();
             }
         }, 2000);
     }
@@ -269,15 +271,15 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void loadList() {
-        SharedPreferences appSharedPrefs = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
+        Context appCtx = this.getApplicationContext();
+        SharedPreferences appSharedPrefs = PreferenceManager.getDefaultSharedPreferences(appCtx);
         Gson gson = new Gson();
         String json = appSharedPrefs.getString(PREFS_LIST_KEY, "");
         Type type = new TypeToken<ArrayList<GeoObject>>() {
         }.getType();
         geoObjectList = gson.fromJson(json, type);
-        if (geoObjectList == null) {
+        if (geoObjectList == null)
             geoObjectList = new ArrayList<GeoObject>();
-        }
     }
 
     public void refreshList() {

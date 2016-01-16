@@ -47,7 +47,8 @@
         android:layout_alignParentTop="true"
         android:gravity="left|center"
         android:text="@string/name"
-        android:textSize="20dp" />
+        android:textSize="20dp"
+        android:textColor="#000000" />
 
     <EditText
         android:id="@+id/nameText"
@@ -55,7 +56,8 @@
         android:layout_height="50dp"
         android:layout_below="@+id/name"
         android:layout_alignParentStart="true"
-        android:textSize="16dp" />
+        android:textSize="16dp"
+        android:hint="@string/name_hint" />
 
     <TextView
         android:id="@+id/type"
@@ -65,7 +67,8 @@
         android:layout_alignParentStart="true"
         android:gravity="left|center"
         android:text="@string/type"
-        android:textSize="20dp" />
+        android:textSize="20dp"
+        android:textColor="#000000" />
 
     <Button
         android:id="@+id/set_type"
@@ -93,7 +96,8 @@
         android:layout_alignParentStart="true"
         android:gravity="left|center"
         android:text="@string/date"
-        android:textSize="20dp" />
+        android:textSize="20dp"
+        android:textColor="#000000" />
 
     <TextView
         android:id="@+id/dateText"
@@ -112,7 +116,8 @@
         android:layout_alignParentStart="true"
         android:gravity="left|center"
         android:text="@string/description"
-        android:textSize="20dp" />
+        android:textSize="20dp"
+        android:textColor="#000000" />
 
     <EditText
         android:id="@+id/descriptionText"
