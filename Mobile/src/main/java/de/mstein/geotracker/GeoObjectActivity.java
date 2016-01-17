@@ -67,14 +67,14 @@ public class GeoObjectActivity extends AppCompatActivity {
                 if (results != null) {
                     if (results[0][0].isSuccess()) {
                         Toast.makeText(GeoObjectActivity.this, R.string.upload_success, Toast.LENGTH_SHORT).show();
+                        MainActivity.geoObjectList.remove(i);
                     } else {
                         Toast.makeText(GeoObjectActivity.this, R.string.upload_error, Toast.LENGTH_SHORT).show();
                     }
                 }
             }
         });
-        MainActivity.geoObjectList.remove(i);
-        this.finish();
+        finish();
     }
 
     public void saveGeoObject(View view) {

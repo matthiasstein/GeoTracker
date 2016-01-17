@@ -16,6 +16,7 @@ import android.webkit.WebViewClient;
  */
 public class WebSiteFragment extends Fragment {
 
+    private static String MAPAPPS_URL = "http://mapapps.de/sandbox/resources/apps/geotracker/index.html";
 
     public WebSiteFragment() {
         // Required empty public constructor
@@ -30,7 +31,7 @@ public class WebSiteFragment extends Fragment {
         myWebView.setWebViewClient(new WebViewClient());
         WebSettings webSettings = myWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
-        myWebView.loadUrl("http://mapapps.de/sandbox/resources/apps/geotracker/index.html");
+        myWebView.loadUrl(MAPAPPS_URL);
         return view;
     }
 
