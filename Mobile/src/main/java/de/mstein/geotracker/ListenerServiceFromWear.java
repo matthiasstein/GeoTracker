@@ -32,7 +32,6 @@ public class ListenerServiceFromWear extends WearableListenerService {
             startIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(startIntent);
         }
-
     }
 
     @Override
