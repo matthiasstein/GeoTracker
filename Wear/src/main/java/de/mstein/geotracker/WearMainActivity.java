@@ -72,9 +72,8 @@ public class WearMainActivity extends WearableActivity implements GoogleApiClien
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wear_main);
-        final GridViewPager pager = (GridViewPager) findViewById(R.id.pager);
 
-        //---Assigns an adapter to provide the content for this pager---
+        final GridViewPager pager = (GridViewPager) findViewById(R.id.pager);
         pager.setAdapter(new GridViewPagerAdapter());
         DotsPageIndicator dotsPageIndicator = (DotsPageIndicator) findViewById(R.id.page_indicator);
         dotsPageIndicator.setPager(pager);
@@ -82,12 +81,7 @@ public class WearMainActivity extends WearableActivity implements GoogleApiClien
         setAmbientEnabled();
 
         if (!hasGps()) {
-            // If this hardware doesn't support GPS, we prefer to exit.
-            // Note that when such device is connected to a phone with GPS capabilities, the
-            // framework automatically routes the location requests to the phone. For this
-            // application, this would not be desirable so we exit the app but for some other
-            // applications, that might be a valid scenario.
-            Log.w(TAG, "This hardware doesn't have GPS, so we exit");
+            Log.w(TAG, "This hardware doesn't have GPS! The Application will finish.");
             new AlertDialog.Builder(this)
                     .setMessage(getString(R.string.gps_not_available))
                     .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
@@ -120,8 +114,6 @@ public class WearMainActivity extends WearableActivity implements GoogleApiClien
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .build();
-
-        //updateVisibility(false);
     }
 
     @Override
@@ -181,7 +173,6 @@ public class WearMainActivity extends WearableActivity implements GoogleApiClien
                 for (Node node : nodes.getNodes()) {
                     mNode = node;
                 }
-                //startMobileApp();
             }
         });
 
@@ -236,7 +227,7 @@ public class WearMainActivity extends WearableActivity implements GoogleApiClien
     }
 
     /**
-     * Adjusts the visibility of speed indicator based on the arrival of GPS data.
+     * Adjusts layout of the record button based on the arrival of GPS data.
      */
     private void updateVisibility(boolean visible) {
         if (mRecButton != null && mRecButtonDisabled != null) {
@@ -250,6 +241,9 @@ public class WearMainActivity extends WearableActivity implements GoogleApiClien
         }
     }
 
+    /**
+     * Adjusts the clock view and the container background color in case of ambiend mode.
+     */
     private void updateDisplay() {
         if (isAmbient()) {
             mContainerView.setBackgroundColor(getResources().getColor(android.R.color.black));
@@ -262,7 +256,7 @@ public class WearMainActivity extends WearableActivity implements GoogleApiClien
     }
 
     /**
-     * Causes the (green) dot blinks when new GPS location data is acquired.
+     * Causes the (green) dot blinks when new POI was tracked.
      */
     private void flashDot() {
         mHandler.post(new Runnable() {
@@ -280,6 +274,9 @@ public class WearMainActivity extends WearableActivity implements GoogleApiClien
         }, INDICATOR_DOT_FADE_AWAY_MS);
     }
 
+    /**
+     * Starts the SentToDataLayerThread that sends the tracked GeoObject to the connected smartphone.
+     */
     private void saveGeoObject(double lat, double lon, String name, String type, String description) {
         DataMap dm = new DataMap();
         GeoObject go = new GeoObject(lat, lon, name, type, description);
@@ -289,6 +286,9 @@ public class WearMainActivity extends WearableActivity implements GoogleApiClien
         t.run();
     }
 
+    /**
+     * Starts the mobile app.
+     */
     private void startMobileApp() {
         if (mNode != null && mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
             Wearable.MessageApi.sendMessage(
@@ -316,6 +316,9 @@ public class WearMainActivity extends WearableActivity implements GoogleApiClien
 
     }
 
+    /*
+     * GridViewAdapeter Class
+     */
     public class GridViewPagerAdapter extends GridPagerAdapter {
         @Override
         public int getColumnCount(int arg0) {
