@@ -1,5 +1,6 @@
 package de.mstein.geotracker;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
@@ -26,11 +27,11 @@ public class ListenerServiceFromWear extends WearableListenerService {
         /*
          * Receive the message from wear
          */
-        /*if (messageEvent.getPath().equals(START_GEOTRACKER_PATH)) {
+        if (messageEvent.getPath().equals(START_GEOTRACKER_PATH)) {
             Intent startIntent = new Intent(this, MainActivity.class);
             startIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(startIntent);
-        }*/
+        }
 
     }
 

@@ -7,6 +7,10 @@
     <string name="saving_done">Einstellungen gesetzt!</string>
     <string name="saving_aported">Speichern abgebrochen!</string>
     <string name="sent_to_phone">Daten an Smartphone gesendet!</string>
+    <string name="opend_on_phone">App auf dem Smartphone geöffnet!</string>
+    <string name="open_on_phone">Auf Smartphone öffnen</string>
+    <string name="set_description">Beschreibung</string>
+    <string name="set_type">Kategorie</string>
     <string name="saving">Wird gespeichert ...</string>
     <string name="name">Name:</string>
     <string name="description">Beschreibung:</string>

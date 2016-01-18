@@ -37,45 +37,19 @@
             android:layout_marginRight="50dp"
             android:background="@drawable/settings" />-->
 
-        <ImageButton
-            android:id="@+id/voice_input"
-            android:layout_width="60px"
-            android:layout_height="60px"
-            android:layout_gravity="bottom|center_horizontal"
-            android:layout_marginBottom="20dp"
-            android:layout_marginLeft="50dp"
-            android:background="@drawable/voice" />
+        <android.support.wearable.view.GridViewPager
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:keepScreenOn="true" />
 
-        <android.support.wearable.view.CircledImageView
-            android:id="@+id/rec_button"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:onClick="onRecordButtonClick"
-            android:src="@drawable/circle_red"
-            app:circle_color="@color/white"
-            app:circle_padding="@dimen/circle_padding"
-            app:circle_radius="@dimen/circle_radius"
-            app:circle_radius_pressed="@dimen/circle_radius_pressed" />
-
-        <android.support.wearable.view.CircledImageView
-            android:id="@+id/rec_button_disabled"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_cancel_80"
-            app:circle_color="@color/grey"
-            app:circle_padding="@dimen/circle_padding"
-            app:circle_radius="@dimen/circle_radius"
-            app:circle_radius_pressed="@dimen/circle_radius_pressed" />
-
-        <ImageView
-            android:id="@+id/dot"
+        <android.support.wearable.view.DotsPageIndicator
+            android:id="@+id/page_indicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@drawable/circle_green"
-            android:visibility="invisible" />
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="10dp">
+        </android.support.wearable.view.DotsPageIndicator>
 
         <TextView
             android:id="@+id/clock"

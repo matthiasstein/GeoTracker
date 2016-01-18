@@ -8,13 +8,18 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.speech.RecognizerIntent;
 import android.support.v7.app.AlertDialog;
 import android.support.wearable.activity.ConfirmationActivity;
 import android.support.wearable.activity.WearableActivity;
 import android.support.wearable.view.BoxInsetLayout;
+import android.support.wearable.view.CircledImageView;
+import android.support.wearable.view.DotsPageIndicator;
+import android.support.wearable.view.GridPagerAdapter;
+import android.support.wearable.view.GridViewPager;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -33,7 +38,6 @@ import com.google.android.gms.wearable.Wearable;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 import de.mstein.shared.GeoObject;
@@ -68,6 +72,13 @@ public class WearMainActivity extends WearableActivity implements GoogleApiClien
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wear_main);
+        final GridViewPager pager = (GridViewPager) findViewById(R.id.pager);
+
+        //---Assigns an adapter to provide the content for this pager---
+        pager.setAdapter(new GridViewPagerAdapter());
+        DotsPageIndicator dotsPageIndicator = (DotsPageIndicator) findViewById(R.id.page_indicator);
+        dotsPageIndicator.setPager(pager);
+
         setAmbientEnabled();
 
         if (!hasGps()) {
@@ -97,9 +108,8 @@ public class WearMainActivity extends WearableActivity implements GoogleApiClien
                     .create()
                     .show();
         }
-
-        setupViews();
-        updateVisibility(false);
+        mContainerView = (BoxInsetLayout) findViewById(R.id.container);
+        mClockView = (TextView) findViewById(R.id.clock);
 
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
         pref.edit().clear().commit();
@@ -110,6 +120,8 @@ public class WearMainActivity extends WearableActivity implements GoogleApiClien
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .build();
+
+        //updateVisibility(false);
     }
 
     @Override
@@ -145,7 +157,7 @@ public class WearMainActivity extends WearableActivity implements GoogleApiClien
         super.onExitAmbient();
     }
 
-    public void onRecordButtonClick(View view) {
+    public void onRecordButtonClick() {
         flashDot();
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
         String description = pref.getString(PREFS_DESC_KEY, "");
@@ -169,7 +181,7 @@ public class WearMainActivity extends WearableActivity implements GoogleApiClien
                 for (Node node : nodes.getNodes()) {
                     mNode = node;
                 }
-                startMobileApp();
+                //startMobileApp();
             }
         });
 
@@ -227,12 +239,14 @@ public class WearMainActivity extends WearableActivity implements GoogleApiClien
      * Adjusts the visibility of speed indicator based on the arrival of GPS data.
      */
     private void updateVisibility(boolean visible) {
-        if (visible) {
-            mRecButton.setVisibility(View.VISIBLE);
-            mRecButtonDisabled.setVisibility(View.GONE);
-        } else {
-            mRecButton.setVisibility(View.GONE);
-            mRecButtonDisabled.setVisibility(View.VISIBLE);
+        if (mRecButton != null && mRecButtonDisabled != null) {
+            if (visible) {
+                mRecButton.setVisibility(View.VISIBLE);
+                mRecButtonDisabled.setVisibility(View.GONE);
+            } else {
+                mRecButton.setVisibility(View.GONE);
+                mRecButtonDisabled.setVisibility(View.VISIBLE);
+            }
         }
     }
 
@@ -245,39 +259,6 @@ public class WearMainActivity extends WearableActivity implements GoogleApiClien
             mContainerView.setBackgroundColor(getResources().getColor(R.color.color1));
             mClockView.setVisibility(View.GONE);
         }
-    }
-
-    private void setupViews() {
-
-        mContainerView = (BoxInsetLayout) findViewById(R.id.container);
-        mClockView = (TextView) findViewById(R.id.clock);
-        mDot = findViewById(R.id.dot);
-        mRecButton = findViewById(R.id.rec_button);
-        mRecButtonDisabled = findViewById(R.id.rec_button_disabled);
-        mRecButtonDisabled.setEnabled(false);
-
-        /*ImageButton settingsButton = (ImageButton) findViewById(R.id.settings);
-
-        settingsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(WearMainActivity.this,
-                        TypeListActivity.class);
-                startActivity(intent);
-            }
-        });*/
-
-        ImageButton voiceInputButton = (ImageButton) findViewById(R.id.voice_input);
-
-        voiceInputButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //displaySpeechRecognizer("name");
-                Intent intent = new Intent(WearMainActivity.this,
-                        VoiceInputActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 
     /**
@@ -323,9 +304,109 @@ public class WearMainActivity extends WearableActivity implements GoogleApiClien
                         }
                     }
             );
+            Intent intent = new Intent(this, ConfirmationActivity.class);
+            intent.putExtra(ConfirmationActivity.EXTRA_ANIMATION_TYPE,
+                    ConfirmationActivity.OPEN_ON_PHONE_ANIMATION);
+            intent.putExtra(ConfirmationActivity.EXTRA_MESSAGE,
+                    getString(R.string.opend_on_phone));
+            startActivity(intent);
         } else {
             //Improve your code
         }
 
+    }
+
+    public class GridViewPagerAdapter extends GridPagerAdapter {
+        @Override
+        public int getColumnCount(int arg0) {
+            return 3;
+        }
+
+        @Override
+        public int getRowCount() {
+            return 1;
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int row, int col) {
+            if (col == 0) {
+                final View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.grid_view_page_1, container, false);
+                mDot = view.findViewById(R.id.dot);
+                mRecButton = view.findViewById(R.id.rec_button);
+                mRecButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onRecordButtonClick();
+                    }
+                });
+                mRecButtonDisabled = view.findViewById(R.id.rec_button_disabled);
+                mRecButtonDisabled.setEnabled(false);
+                mRecButton.setVisibility(View.GONE);
+                mRecButtonDisabled.setVisibility(View.VISIBLE);
+                container.addView(view);
+                return view;
+            } else if (col == 1) {
+                final View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.grid_view_page_2, container, false);
+                final CircledImageView voiceInputButton = (CircledImageView) view.findViewById(R.id.voice_input);
+
+                voiceInputButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(WearMainActivity.this,
+                                VoiceInputActivity.class);
+                        startActivity(intent);
+                    }
+                });
+
+                final TextView textView = (TextView) view.findViewById(R.id.textView);
+                textView.setText(getString(R.string.set_description));
+                container.addView(view);
+                return view;
+            } /*else if (col == 2) {
+                final View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.grid_view_page_3, container, false);
+                final CircledImageView settingsButton = (CircledImageView) view.findViewById(R.id.settings_list);
+
+                settingsButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(WearMainActivity.this,
+                                TypeListActivity.class);
+                        startActivity(intent);
+                    }
+                });
+
+                final TextView textView = (TextView) view.findViewById(R.id.textView);
+                textView.setText(getString(R.string.set_type));
+                container.addView(view);
+                return view;
+            }*/ else if (col == 2) {
+                final View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.grid_view_page_4, container, false);
+                final CircledImageView smartPhoneButton = (CircledImageView) view.findViewById(R.id.smartphone);
+
+                smartPhoneButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startMobileApp();
+                    }
+                });
+
+                final TextView textView = (TextView) view.findViewById(R.id.textView);
+                textView.setText(getString(R.string.open_on_phone));
+                container.addView(view);
+                return view;
+            } else {
+                return null;
+            }
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int row, int col, Object view) {
+            container.removeView((View) view);
+        }
+
+        @Override
+        public boolean isViewFromObject(View view, Object object) {
+            return view == object;
+        }
     }
 }
