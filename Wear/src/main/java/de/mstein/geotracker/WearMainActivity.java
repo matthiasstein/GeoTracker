@@ -20,7 +20,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -156,12 +155,21 @@ public class WearMainActivity extends WearableActivity implements GoogleApiClien
         String type = pref.getString(PREFS_TYPE_KEY, "GeoObject");
         String name = "Neuer POI";
         saveGeoObject(lat, lon, name, type, description);
+        showOpenOnPhoneConfirmationActivity(getString(R.string.sent_to_phone));
 
-        Intent intent = new Intent(this, ConfirmationActivity.class);
+        /*Intent intent = new Intent(this, ConfirmationActivity.class);
         intent.putExtra(ConfirmationActivity.EXTRA_ANIMATION_TYPE,
                 ConfirmationActivity.OPEN_ON_PHONE_ANIMATION);
         intent.putExtra(ConfirmationActivity.EXTRA_MESSAGE,
                 getString(R.string.sent_to_phone));
+        startActivity(intent);*/
+    }
+
+    public void showOpenOnPhoneConfirmationActivity(String s) {
+        Intent intent = new Intent(this, ConfirmationActivity.class);
+        intent.putExtra(ConfirmationActivity.EXTRA_ANIMATION_TYPE,
+                ConfirmationActivity.OPEN_ON_PHONE_ANIMATION);
+        intent.putExtra(ConfirmationActivity.EXTRA_MESSAGE,s);
         startActivity(intent);
     }
 
@@ -296,24 +304,18 @@ public class WearMainActivity extends WearableActivity implements GoogleApiClien
                     new ResultCallback<MessageApi.SendMessageResult>() {
                         @Override
                         public void onResult(MessageApi.SendMessageResult sendMessageResult) {
-
                             if (!sendMessageResult.getStatus().isSuccess()) {
                                 Log.e("TAG", "Failed to send message with status code: "
                                         + sendMessageResult.getStatus().getStatusCode());
+                            } else {
+                                showOpenOnPhoneConfirmationActivity(getString(R.string.opend_on_phone));
                             }
                         }
                     }
             );
-            Intent intent = new Intent(this, ConfirmationActivity.class);
-            intent.putExtra(ConfirmationActivity.EXTRA_ANIMATION_TYPE,
-                    ConfirmationActivity.OPEN_ON_PHONE_ANIMATION);
-            intent.putExtra(ConfirmationActivity.EXTRA_MESSAGE,
-                    getString(R.string.opend_on_phone));
-            startActivity(intent);
         } else {
             //Improve your code
         }
-
     }
 
     /*
