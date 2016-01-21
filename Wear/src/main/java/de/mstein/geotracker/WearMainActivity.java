@@ -155,7 +155,7 @@ public class WearMainActivity extends WearableActivity implements GoogleApiClien
         String type = pref.getString(PREFS_TYPE_KEY, "GeoObject");
         String name = "Neuer POI";
         saveGeoObject(lat, lon, name, type, description);
-        //showOpenOnPhoneConfirmationActivity(getString(R.string.sent_to_phone));
+        showOpenOnPhoneConfirmationActivity(getString(R.string.sent_to_phone));
     }
 
     public void showOpenOnPhoneConfirmationActivity(String s) {
