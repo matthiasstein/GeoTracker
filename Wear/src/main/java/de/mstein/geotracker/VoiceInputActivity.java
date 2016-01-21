@@ -119,7 +119,6 @@ public class VoiceInputActivity extends Activity implements
         } else {
             finish();
         }
-        //super.onActivityResult(requestCode, resultCode, data);
     }
 
     private void showGUI(boolean b) {

@@ -155,14 +155,7 @@ public class WearMainActivity extends WearableActivity implements GoogleApiClien
         String type = pref.getString(PREFS_TYPE_KEY, "GeoObject");
         String name = "Neuer POI";
         saveGeoObject(lat, lon, name, type, description);
-        showOpenOnPhoneConfirmationActivity(getString(R.string.sent_to_phone));
-
-        /*Intent intent = new Intent(this, ConfirmationActivity.class);
-        intent.putExtra(ConfirmationActivity.EXTRA_ANIMATION_TYPE,
-                ConfirmationActivity.OPEN_ON_PHONE_ANIMATION);
-        intent.putExtra(ConfirmationActivity.EXTRA_MESSAGE,
-                getString(R.string.sent_to_phone));
-        startActivity(intent);*/
+        //showOpenOnPhoneConfirmationActivity(getString(R.string.sent_to_phone));
     }
 
     public void showOpenOnPhoneConfirmationActivity(String s) {
@@ -283,14 +276,14 @@ public class WearMainActivity extends WearableActivity implements GoogleApiClien
     }
 
     /**
-     * Starts the SentToDataLayerThread that sends the tracked GeoObject to the connected smartphone.
+     * Starts the SentGeoObjectToDataLayerThread that sends the tracked GeoObject to the connected smartphone.
      */
     private void saveGeoObject(double lat, double lon, String name, String type, String description) {
         DataMap dm = new DataMap();
         GeoObject go = new GeoObject(lat, lon, name, type, description);
         go.putToDataMap(dm);
 
-        SendToDataLayerThread t = new SendToDataLayerThread("/geoobject", dm, mGoogleApiClient, GO_KEY);
+        SendGeoObjectToDataLayerThread t = new SendGeoObjectToDataLayerThread("/geoobject", dm, mGoogleApiClient, GO_KEY);
         t.run();
     }
 

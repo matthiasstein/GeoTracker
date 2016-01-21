@@ -15,7 +15,7 @@ import com.google.gson.Gson;
 
 import de.mstein.shared.GeoObject;
 
-public class ListenerServiceFromWear extends WearableListenerService {
+public class DataLayerListenerService extends WearableListenerService {
 
     private static final String START_GEOTRACKER_PATH = "/start_geotracker_mobile_app";
     public static final String PREFS_LIST_KEY = "geoObjectList";

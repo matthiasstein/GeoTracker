@@ -246,9 +246,6 @@ public class MainActivity extends AppCompatActivity implements
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
-                /*GeoObjectListFragment goFragment = (GeoObjectListFragment) getSupportFragmentManager().findFragmentByTag("geoObjectFragment");
-                if (goFragment != null)
-                    goFragment.refresh();*/
                 refreshList();
             }
         }, 2000);
