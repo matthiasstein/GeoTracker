@@ -40,11 +40,13 @@
             android:id="@+id/description_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:maxWidth = "140dp"
             android:layout_gravity="center"
-            android:layout_marginBottom="50dp"
+            android:layout_marginBottom="20dp"
             android:fontFamily="sans-serif-light"
             android:textColor="@color/dark_grey"
             android:textSize="16sp"
+            android:lines="4"
             android:textStyle="italic"/>
 
         <android.support.wearable.view.DelayedConfirmationView
@@ -64,7 +66,7 @@
             android:layout_width="75dp"
             android:layout_height="wrap_content"
             android:layout_gravity="right|bottom"
-            android:layout_marginBottom="35dp"
+            android:layout_marginBottom="36dp"
             android:layout_marginRight="30dp"
             android:fontFamily="sans-serif-light"
             android:text="@string/saving"
