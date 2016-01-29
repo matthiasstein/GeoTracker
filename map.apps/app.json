@@ -1,0 +1,279 @@
+{
+   "load": {
+      "allowedBundles": [
+         "system",
+         "templatelayout",
+         "map",
+         "notifier",
+         "toolset",
+         "toolrules",
+         "parametermanager",
+         "omnisearch",
+         "featureinfo",
+         "dn_querybuilder"
+      ]
+   },
+   "bundles": {
+      "agssearch": {
+         "AGSStore": [
+            {
+               "title": "XErleben",
+               "description": "",
+               "omniSearchLabelAttr": "O_NAME",
+               "omniSearchSearchAttr": "O_NAME",
+               "idProperty": "OBJECTID",
+               "url": "http://services5.arcgis.com/WQdAIjtIvpizzS3U/arcgis/rest/services/XErleben/FeatureServer/0",
+               "useIn": [
+                  "omnisearch",
+                  "selection"
+               ],
+               "filterOptions": {
+                  "suggestContains": true
+               },
+               "omniSearchTypingDelay": 500,
+               "omniSearchPageSize": 20,
+               "omniSearchDefaultLabel": "POI-Name eingeben...",
+               "fetchIdProperty": true,
+               "enablePagination": false,
+               "id": "_AGS_STORE_1453414124872"
+            }
+         ]
+      },
+      "contentviewer": {
+         "ContentRegistration": {
+            "contentRules": [
+               {
+                  "info": {
+                     "valueNotFoundString": "null",
+                     "type": "Grid",
+                     "dataViewOptions": {
+                        "showPager": false,
+                        "showFilter": false,
+                        "showViewButtons": false,
+                        "itemsPerPage": 100,
+                        "DGRID": {
+                           "checkboxSelection": false
+                        }
+                     },
+                     "title": "{O_NAME}",
+                     "showDetailsButton": false,
+                     "allowedProperties": [
+                        "OBJECTID",
+                        "I_BESCHR",
+                        "M_BEARBTAM",
+                        "M_INFOQUEL",
+                        "M_LEBZSTAR",
+                        "M_PFLGSTEL",
+                        "O_CODE",
+                        "O_KAT",
+                        "O_NAME",
+                        "O_UUID"
+                     ]
+                  },
+                  "windowSize": {
+                     "w": 320,
+                     "h": 320
+                  },
+                  "matches": {
+                     "context": {
+                        "$or": [
+                           {
+                              "storeId": "_AGS_STORE_1453414124872"
+                           },
+                           {
+                              "mapModelNodeId": "service_94373_1453413896201/0"
+                           }
+                        ]
+                     }
+                  },
+                  "title": "XErleben",
+                  "onlyShowDetail": false,
+                  "type": "Grid"
+               }
+            ]
+         }
+      },
+      "dn_querybuilder": {
+         "enabled": true
+      },
+      "featureinfo": {
+         "enabled": true
+      },
+      "map": {
+         "MapModelFactory": {
+            "_configData": {
+               "maps": [
+                  {
+                     "baseLayer": [
+                        {
+                           "title": "Canvas Base",
+                           "enabled": true,
+                           "service": "service_88309",
+                           "category": {
+                              "title": "Canvas Base",
+                              "description": "This map draws attention to your thematic content by providing a neutral background with minimal colors, labels, and features. Only key information is represented to provide geographic context, allowing your data to come to the foreground. This dark gray map supports bright colors, creating a visually compelling map graphic which helps your reader see the patterns intended. \n\nThis map was developed by Esri using HERE data, DeLorme basemap layers, OpenStreetMap contributors, Esri basemap data, and select data from the GIS user community. Worldwide coverage is provided from Level 0 (1:591M scale) through Level 10 (1:577k scale). In North America, Central and South America, Africa, India, Australia & New Zealand, Pacific Islands, and select countries in the Middle East from Level 11 (1:288k scale) through Level 16 (1:9k scale).\n\nFor more information on this map, visit us online at http://goto.arcgisonline.com/maps/World_Dark_Gray_Base",
+                              "imgUrl": ""
+                           },
+                           "layers": [
+                              "*"
+                           ],
+                           "id": "service_88309_1453413801684",
+                           "opacity": 1
+                        }
+                     ],
+                     "operationalLayer": [
+                        {
+                           "title": "XErleben",
+                           "enabled": true,
+                           "service": "service_94373",
+                           "category": {
+                              "title": "XErleben",
+                              "description": "XErleben",
+                              "imgUrl": ""
+                           },
+                           "layers": [
+                              "*"
+                           ],
+                           "id": "service_94373_1453413896201",
+                           "options": {}
+                        }
+                     ]
+                  }
+               ]
+            }
+         },
+         "MapState": {
+            "initialExtent": {
+               "xmin": 253546.53227160242,
+               "xmax": 1427619.2867318515,
+               "ymin": 6419017.484023701,
+               "ymax": 6979148.027297445,
+               "wkid": 3857
+            }
+         },
+         "MapWidgetFactory": {
+            "esriMapOpts": {
+               "slider": true,
+               "nav": false,
+               "logo": true,
+               "sliderStyle": "small",
+               "doubleClickZoom": true,
+               "clickRecenter": true,
+               "pan": true,
+               "rubberBandZoom": true,
+               "keyboardNavigation": true,
+               "scrollWheelZoom": true,
+               "sliderPosition": "top-right",
+               "displayGraphicsOnPan": true,
+               "navigationMode": "css-transforms",
+               "fadeOnZoom": true,
+               "showAttribution": true,
+               "sliderOrientation": "vertical",
+               "sliderLabels": [
+                  ""
+               ]
+            }
+         },
+         "MappingResourceRegistryFactory": {
+            "_knownServices": {
+               "services": [
+                  {
+                     "id": "service_88309",
+                     "url": "http://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Dark_Gray_Base/MapServer",
+                     "type": "AGS_TILED",
+                     "title": "Canvas Base",
+                     "description": "This map draws attention to your thematic content by providing a neutral background with minimal colors, labels, and features. Only key information is represented to provide geographic context, allowing your data to come to the foreground. This dark gray map supports bright colors, creating a visually compelling map graphic which helps your reader see the patterns intended. \n\nThis map was developed by Esri using HERE data, DeLorme basemap layers, OpenStreetMap contributors, Esri basemap data, and select data from the GIS user community. Worldwide coverage is provided from Level 0 (1:591M scale) through Level 10 (1:577k scale). In North America, Central and South America, Africa, India, Australia & New Zealand, Pacific Islands, and select countries in the Middle East from Level 11 (1:288k scale) through Level 16 (1:9k scale).\n\nFor more information on this map, visit us online at http://goto.arcgisonline.com/maps/World_Dark_Gray_Base",
+                     "layers": [
+                        {
+                           "id": "0",
+                           "title": "Dark Gray Canvas Base",
+                           "enabled": true
+                        }
+                     ],
+                     "options": {}
+                  },
+                  {
+                     "id": "service_94373",
+                     "url": "http://services5.arcgis.com/WQdAIjtIvpizzS3U/arcgis/rest/services/XErleben/FeatureServer",
+                     "type": "AGS_FEATURE",
+                     "title": "XErleben",
+                     "description": "XErleben",
+                     "layers": [
+                        {
+                           "id": "0",
+                           "title": "XEerleben_Mini",
+                           "enabled": true
+                        }
+                     ],
+                     "options": {
+                        "outFields": "*"
+                     }
+                  }
+               ]
+            }
+         },
+         "enabled": true
+      },
+      "notifier": {
+         "enabled": true
+      },
+      "omnisearch": {
+         "enabled": true
+      },
+      "parametermanager": {
+         "enabled": true
+      },
+      "selection": {
+         "SelectionTool": [
+            {
+               "geoType": "Extent",
+               "iconClass": "icon-select-extend",
+               "clickTolerance": 0,
+               "id": "selectionTool_1453414124892",
+               "storeId": "_AGS_STORE_1453414124872",
+               "title": "XErleben"
+            }
+         ]
+      },
+      "templatelayout": {
+         "enabled": true
+      },
+      "toolrules": {
+         "enabled": true
+      },
+      "toolset": {
+         "ToolsetManager": {
+            "toolsets": [
+               {
+                  "id": "toolset_1453413989553",
+                  "title": "Werkzeuge",
+                  "container": "map",
+                  "windowType": "fixed",
+                  "window": {
+                     "closable": true
+                  },
+                  "__isDirty": true,
+                  "tooltip": "Werkzeuge",
+                  "cssClass": "notitle",
+                  "max_horizontal": 1,
+                  "position": {
+                     "rel_l": 20,
+                     "rel_t": 70
+                  },
+                  "tools": [
+                     "featureInfoTool",
+                     "userQueryBuilderTool"
+                  ]
+               }
+            ]
+         },
+         "enabled": true
+      },
+      "usagelog_restservice": {
+         "enabled": true
+      },
+      "wizard": {
+         "enabled": true
+      }
+   }
+}
