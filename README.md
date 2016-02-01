@@ -1,1 +1,3 @@
 # GeoTracker
+
+This app running on a smartwatch was developed to use the intregrated GPS-sensor to record this objets in a simple but efficient way. A simple click as well as some aditional details that might be given through voice input meet all requirements. The field of application is the entry of so called points of interest (POI) through utilization of the XErleben object model. The basis for development ist Google’s operating system Android Wear, a system of Android specialized and conformist for smartwatches. The depiction of geodata in a map is realized thorough the cooperation partner con terra‘s map.apps platform, for smartwatches as well as web browsers.
