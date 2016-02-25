@@ -17,7 +17,7 @@
     <string name="imgdesc">imgdesc</string>
     <string name="change_type_button">Kategorie ändern</string>
     <string name="change_type">Vor dem Upload die Kategorie ändern!</string>
-    <string name="search_text">Nach Typen suchen...</string>
+    <string name="search_text">Nach Kategorie suchen...</string>
     <string name="title_activity_type_list">TypeListActivity</string>
 
     <string-array name="drawer_array">
