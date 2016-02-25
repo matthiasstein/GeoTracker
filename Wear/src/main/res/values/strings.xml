@@ -11,7 +11,7 @@
     <string name="open_on_phone">Auf Smartphone öffnen</string>
     <string name="set_description">Beschreibung</string>
     <string name="set_type">Kategorie</string>
-    <string name="saving">Wird gespeichert ...</string>
+    <string name="saving">Speichert...</string>
     <string name="name">Name:</string>
     <string name="description">Beschreibung:</string>
     <string name="save_description">Beschreibung?</string>
