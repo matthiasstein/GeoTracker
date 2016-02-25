@@ -1,6 +1,5 @@
 package de.mstein.geotracker;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -8,7 +7,6 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AlertDialog;
 import android.support.wearable.activity.ConfirmationActivity;
 import android.support.wearable.activity.WearableActivity;
 import android.support.wearable.view.BoxInsetLayout;
@@ -81,25 +79,6 @@ public class WearMainActivity extends WearableActivity implements GoogleApiClien
 
         if (!hasGps()) {
             Log.w(TAG, "This hardware doesn't have GPS! The Application will finish.");
-            new AlertDialog.Builder(this)
-                    .setMessage(getString(R.string.gps_not_available))
-                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int id) {
-                            finish();
-                            dialog.cancel();
-                        }
-                    })
-                    .setOnDismissListener(new DialogInterface.OnDismissListener() {
-                        @Override
-                        public void onDismiss(DialogInterface dialog) {
-                            dialog.cancel();
-                            finish();
-                        }
-                    })
-                    .setCancelable(false)
-                    .create()
-                    .show();
         }
         mContainerView = (BoxInsetLayout) findViewById(R.id.container);
         mClockView = (TextView) findViewById(R.id.clock);
