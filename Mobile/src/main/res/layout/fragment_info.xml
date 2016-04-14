@@ -1,13 +1,13 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" tools:context=".InfoFragment">
-
-    <!-- TODO: Update blank fragment layout -->
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="de.mstein.geotracker.InfoFragment">
 
     <TextView
+        android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Diese App wurde entwickelt im Rahmen der Bachelorarbeit mit dem Thema:\n\nGeodatenerfassung mit Smartwatches\n\nSie ermöglicht die Erfassung von POI mit Hilfe einer Android Wear Smartwatch!"
-        android:id="@+id/textView"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        android:text="Diese App wurde entwickelt im Rahmen der Bachelorarbeit mit dem Thema:\n\nGeodatenerfassung mit Smartwatches\n\nSie ermöglicht die Erfassung von POI mit Hilfe einer Android Wear Smartwatch!" />
 </FrameLayout>

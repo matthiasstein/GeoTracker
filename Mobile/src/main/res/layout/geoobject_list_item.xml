@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="48dp"
-    android:padding="5dp" >
+    android:padding="5dp">
 
     <ImageView
         android:id="@+id/icon"
@@ -19,11 +18,11 @@
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/icon"
         android:layout_alignParentRight="true"
-        android:gravity="center_vertical"
-        android:textColor="#000000"
-        android:textSize="20sp"
+        android:layout_toRightOf="@id/icon"
         android:ellipsize="end"
-        android:singleLine="true"/>
+        android:gravity="center_vertical"
+        android:singleLine="true"
+        android:textColor="#000000"
+        android:textSize="20sp" />
 </RelativeLayout>
