@@ -19,10 +19,11 @@
     <string name="change_type">Vor dem Upload die Kategorie ändern!</string>
     <string name="search_text">Nach Kategorie suchen...</string>
     <string name="title_activity_type_list">TypeListActivity</string>
-
-    <string-array name="drawer_array">
-        <item>Neue POI</item>
-        <item>map.apps</item>
-        <item>Info</item>
-    </string-array>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="new_poi">Neue POI</string>
+    <string name="map_apps">map.apps</string>
+    <string name="info">Info</string>
+    <string name="author">Matthias Stein</string>
+    <string name="company">con terra</string>
 </resources>

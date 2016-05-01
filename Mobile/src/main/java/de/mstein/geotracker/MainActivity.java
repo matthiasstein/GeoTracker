@@ -11,14 +11,12 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
+import android.support.design.widget.NavigationView;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -37,41 +35,39 @@ public class MainActivity extends AppCompatActivity implements
         DataApi.DataListener,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        GeoObjectListFragment.OnFragmentInteractionListener {
+        GeoObjectListFragment.OnFragmentInteractionListener,
+        NavigationView.OnNavigationItemSelectedListener {
 
     private GoogleApiClient mGoogleApiClient;
     public static ArrayList<GeoObject> geoObjectList = new ArrayList<GeoObject>();
     public static final String PREFS_LIST_KEY = "geoObjectList";
 
     Toolbar mToolbar;
-    private String[] mDrawerTitles;
     private CharSequence mTitle;
     protected DrawerLayout mDrawerLayout;
-    private ListView mDrawerList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // drawer
         mTitle = getTitle();
-        mDrawerTitles = getResources().getStringArray(R.array.drawer_array);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
-
-        // set a custom shadow that overlays the main content when the drawer opens
-        mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-        // set up the drawer's list view with items and click listener
-        mDrawerList.setAdapter(new ArrayAdapter<String>(this,
-                R.layout.drawer_list_item, mDrawerTitles));
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
         // toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         mToolbar.setNavigationIcon(R.drawable.ic_drawer);
+
+        // drawer
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        mDrawerLayout.setDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(Wearable.API)
@@ -82,7 +78,11 @@ public class MainActivity extends AppCompatActivity implements
         loadList();
 
         if (savedInstanceState == null) {
-            selectItem(0);
+            navigationView.getMenu().findItem(R.id.nav_new_poi).setChecked(true);
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.replace(R.id.content_frame, new GeoObjectListFragment(), "geoObjectFragment");
+            transaction.commit();
         }
     }
 
@@ -118,69 +118,67 @@ public class MainActivity extends AppCompatActivity implements
         startActivity(intent);
     }
 
-    private class DrawerItemClickListener implements ListView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView parent, View view, int position, long id) {
-            selectItem(position);
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
         }
     }
 
-    /**
-     * Swaps fragments in the main content view
-     */
-    private void selectItem(int position) {
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
         // update the main content by replacing fragments
         Fragment fragment = null;
         FragmentManager fragmentManager = getSupportFragmentManager(); // For AppCompat use getSupportFragmentManager
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         Fragment oldFragment = getActiveFragment();
 
-        switch (position) {
-            default:
-            case 0:
-                fragment = fragmentManager.findFragmentByTag("geoObjectFragment");
-                if (oldFragment != null)
-                    transaction.hide(oldFragment);
-                if (fragment == null) {
-                    transaction.add(R.id.content_frame, new GeoObjectListFragment(), "geoObjectFragment");
-                } else {
-                    transaction.remove(fragment);
-                    fragment = new GeoObjectListFragment();
-                    transaction.add(R.id.content_frame, fragment, "geoObjectFragment");
-                }
-                //transaction.replace(R.id.content_frame, new GeoObjectListFragment(), "geoObjectFragment");
-                transaction.commit();
-                break;
-            case 1:
-                fragment = fragmentManager.findFragmentByTag("webSiteFragment");
-                if (oldFragment != null)
-                    transaction.hide(oldFragment);
-                if (fragment == null) {
-                    transaction.add(R.id.content_frame, new WebSiteFragment(), "webSiteFragment");
-                } else {
-                    transaction.show(fragment);
-                }
-                //transaction.replace(R.id.content_frame, new WebSiteFragment(), "webSiteFragment");
-                transaction.commit();
-                break;
-            case 2:
-                fragment = fragmentManager.findFragmentByTag("infoFragment");
-                if (oldFragment != null)
-                    transaction.hide(oldFragment);
-                if (fragment == null) {
-                    transaction.add(R.id.content_frame, new InfoFragment(), "infoFragment");
-                } else {
-                    transaction.show(fragment);
-                }
-                //transaction.replace(R.id.content_frame, new InfoFragment(), "infoFragment");
-                transaction.commit();
-                break;
+        if (id == R.id.nav_new_poi) {
+            fragment = fragmentManager.findFragmentByTag("geoObjectFragment");
+            if (oldFragment != null)
+                transaction.hide(oldFragment);
+            if (fragment == null) {
+                transaction.add(R.id.content_frame, new GeoObjectListFragment(), "geoObjectFragment");
+            } else {
+                transaction.remove(fragment);
+                fragment = new GeoObjectListFragment();
+                transaction.add(R.id.content_frame, fragment, "geoObjectFragment");
+            }
+            //transaction.replace(R.id.content_frame, new GeoObjectListFragment(), "geoObjectFragment");
+            transaction.commit();
+        } else if (id == R.id.nav_map_apps) {
+            fragment = fragmentManager.findFragmentByTag("webSiteFragment");
+            if (oldFragment != null)
+                transaction.hide(oldFragment);
+            if (fragment == null) {
+                transaction.add(R.id.content_frame, new WebSiteFragment(), "webSiteFragment");
+            } else {
+                transaction.show(fragment);
+            }
+            //transaction.replace(R.id.content_frame, new WebSiteFragment(), "webSiteFragment");
+            transaction.commit();
+        } else if (id == R.id.nav_info) {
+            fragment = fragmentManager.findFragmentByTag("infoFragment");
+            if (oldFragment != null)
+                transaction.hide(oldFragment);
+            if (fragment == null) {
+                transaction.add(R.id.content_frame, new InfoFragment(), "infoFragment");
+            } else {
+                transaction.show(fragment);
+            }
+            //transaction.replace(R.id.content_frame, new InfoFragment(), "infoFragment");
+            transaction.commit();
         }
 
-        // Highlight the selected item, update the title, and close the drawer
-        mDrawerList.setItemChecked(position, true);
-        setTitle(mDrawerTitles[position]);
-        mDrawerLayout.closeDrawer(mDrawerList);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 
     public Fragment getActiveFragment() {
