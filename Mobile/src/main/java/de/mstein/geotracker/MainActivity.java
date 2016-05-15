@@ -81,7 +81,9 @@ public class MainActivity extends AppCompatActivity implements
             navigationView.getMenu().findItem(R.id.nav_new_poi).setChecked(true);
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.replace(R.id.content_frame, new GeoObjectListFragment(), "geoObjectFragment");
+            transaction.add(R.id.content_frame, new GeoObjectListFragment(), "geoObjectFragment");
+            transaction.add(R.id.content_frame, new WebSiteFragment(), "webSiteFragment");
+            transaction.add(R.id.content_frame, new InfoFragment(), "infoFragment");
             transaction.commit();
         }
     }
@@ -134,69 +136,36 @@ public class MainActivity extends AppCompatActivity implements
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         // update the main content by replacing fragments
-        Fragment fragment = null;
         FragmentManager fragmentManager = getSupportFragmentManager(); // For AppCompat use getSupportFragmentManager
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        Fragment oldFragment = getActiveFragment();
+        GeoObjectListFragment geoObjectFragment = (GeoObjectListFragment) fragmentManager.findFragmentByTag("geoObjectFragment");
+        WebSiteFragment webSiteFragment = (WebSiteFragment) fragmentManager.findFragmentByTag("webSiteFragment");
+        InfoFragment infoFragment = (InfoFragment) fragmentManager.findFragmentByTag("infoFragment");
+        hideAllFragments();
 
         if (id == R.id.nav_new_poi) {
-            fragment = fragmentManager.findFragmentByTag("geoObjectFragment");
-            if (oldFragment != null)
-                transaction.hide(oldFragment);
-            if (fragment == null) {
-                transaction.add(R.id.content_frame, new GeoObjectListFragment(), "geoObjectFragment");
-            } else {
-                transaction.remove(fragment);
-                fragment = new GeoObjectListFragment();
-                transaction.add(R.id.content_frame, fragment, "geoObjectFragment");
-            }
-            //transaction.replace(R.id.content_frame, new GeoObjectListFragment(), "geoObjectFragment");
-            transaction.commit();
+            transaction.show(geoObjectFragment);
         } else if (id == R.id.nav_map_apps) {
-            fragment = fragmentManager.findFragmentByTag("webSiteFragment");
-            if (oldFragment != null)
-                transaction.hide(oldFragment);
-            if (fragment == null) {
-                transaction.add(R.id.content_frame, new WebSiteFragment(), "webSiteFragment");
-            } else {
-                transaction.show(fragment);
-            }
-            //transaction.replace(R.id.content_frame, new WebSiteFragment(), "webSiteFragment");
-            transaction.commit();
+            transaction.show(webSiteFragment);
         } else if (id == R.id.nav_info) {
-            fragment = fragmentManager.findFragmentByTag("infoFragment");
-            if (oldFragment != null)
-                transaction.hide(oldFragment);
-            if (fragment == null) {
-                transaction.add(R.id.content_frame, new InfoFragment(), "infoFragment");
-            } else {
-                transaction.show(fragment);
-            }
-            //transaction.replace(R.id.content_frame, new InfoFragment(), "infoFragment");
-            transaction.commit();
+            transaction.show(infoFragment);
         }
 
+        transaction.commit();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
-    public Fragment getActiveFragment() {
+    public void hideAllFragments() {
         FragmentManager fm = getSupportFragmentManager();
-        Fragment fragment;
-        fragment = fm.findFragmentByTag("geoObjectFragment");
-        if (fragment != null)
-            if (fragment.isVisible())
-                return fragment;
-        fragment = fm.findFragmentByTag("webSiteFragment");
-        if (fragment != null)
-            if (fragment.isVisible())
-                return fragment;
-        fragment = fm.findFragmentByTag("infoFragment");
-        if (fragment != null)
-            if (fragment.isVisible())
-                return fragment;
-        return null;
+        FragmentTransaction transaction = fm.beginTransaction();
+        for (Fragment fragment : fm.getFragments()) {
+            if (fragment.isVisible()) {
+                transaction.hide(fragment);
+            }
+        }
+        transaction.commit();
     }
 
     @Override
