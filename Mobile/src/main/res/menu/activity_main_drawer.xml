@@ -3,13 +3,14 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:checked="true"
             android:id="@+id/nav_new_poi"
             android:icon="@drawable/ic_assignment_black_48dp"
             android:title="@string/new_poi" />
-        <item
+        <!--<item
             android:id="@+id/nav_map_apps"
             android:icon="@drawable/ic_layers_black_48dp"
-            android:title="@string/map_apps" />
+            android:title="@string/map_apps" />-->
         <item
             android:id="@+id/nav_info"
             android:icon="@android:drawable/ic_dialog_info"

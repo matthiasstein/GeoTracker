@@ -82,8 +82,12 @@ public class MainActivity extends AppCompatActivity implements
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.add(R.id.content_frame, new GeoObjectListFragment(), "geoObjectFragment");
-            transaction.add(R.id.content_frame, new WebSiteFragment(), "webSiteFragment");
-            transaction.add(R.id.content_frame, new InfoFragment(), "infoFragment");
+            //Fragment webSiteFragment = new WebSiteFragment();
+            //transaction.add(R.id.content_frame, webSiteFragment, "webSiteFragment");
+            //transaction.hide(webSiteFragment);
+            Fragment infoFragment = new InfoFragment();
+            transaction.add(R.id.content_frame, infoFragment, "infoFragment");
+            transaction.hide(infoFragment);
             transaction.commit();
         }
     }
@@ -139,15 +143,16 @@ public class MainActivity extends AppCompatActivity implements
         FragmentManager fragmentManager = getSupportFragmentManager(); // For AppCompat use getSupportFragmentManager
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         GeoObjectListFragment geoObjectFragment = (GeoObjectListFragment) fragmentManager.findFragmentByTag("geoObjectFragment");
-        WebSiteFragment webSiteFragment = (WebSiteFragment) fragmentManager.findFragmentByTag("webSiteFragment");
+        //WebSiteFragment webSiteFragment = (WebSiteFragment) fragmentManager.findFragmentByTag("webSiteFragment");
         InfoFragment infoFragment = (InfoFragment) fragmentManager.findFragmentByTag("infoFragment");
+
         hideAllFragments();
 
         if (id == R.id.nav_new_poi) {
             transaction.show(geoObjectFragment);
-        } else if (id == R.id.nav_map_apps) {
+        } /*else if (id == R.id.nav_map_apps) {
             transaction.show(webSiteFragment);
-        } else if (id == R.id.nav_info) {
+        }*/ else if (id == R.id.nav_info) {
             transaction.show(infoFragment);
         }
 
