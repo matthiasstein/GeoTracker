@@ -1,18 +1,18 @@
 <resources>
     <string name="app_name">GeoTracker</string>
-    <string name="gps_not_available">GPS nicht verfügbar!</string>
+    <string name="gps_not_available">GPS not available!</string>
     <string name="ok">OK</string>
-    <string name="type">Kategorie</string>
-    <string name="settings">Einstellungen</string>
-    <string name="saving_done">Einstellungen gesetzt!</string>
-    <string name="saving_aported">Speichern abgebrochen!</string>
-    <string name="sent_to_phone">Daten an Smartphone gesendet!</string>
+    <string name="type">Category</string>
+    <string name="settings">Settings</string>
+    <string name="saving_done">Settings saved!</string>
+    <string name="saving_aported">Save canceled!</string>
+    <string name="sent_to_phone">Data was sent to phone!</string>
     <string name="opend_on_phone">App auf dem Smartphone geöffnet!</string>
-    <string name="open_on_phone">Auf Smartphone öffnen</string>
-    <string name="set_description">Beschreibung</string>
-    <string name="set_type">Kategorie</string>
-    <string name="saving">Speichert...</string>
+    <string name="open_on_phone">App open on your phone</string>
+    <string name="set_description">Description</string>
+    <string name="set_type">Category</string>
+    <string name="saving">Saving...</string>
     <string name="name">Name:</string>
-    <string name="description">Beschreibung:</string>
-    <string name="save_description">Beschreibung?</string>
+    <string name="description">Description:</string>
+    <string name="save_description">Description?</string>
 </resources>
