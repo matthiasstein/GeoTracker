@@ -303,7 +303,7 @@ public class WearMainActivity extends WearableActivity implements GoogleApiClien
     public class GridViewPagerAdapter extends GridPagerAdapter {
         @Override
         public int getColumnCount(int arg0) {
-            return 3;
+            return 4;
         }
 
         @Override
@@ -346,7 +346,7 @@ public class WearMainActivity extends WearableActivity implements GoogleApiClien
                 textView.setText(getString(R.string.set_description));
                 container.addView(view);
                 return view;
-            } /*else if (col == 2) {
+            } else if (col == 2) {
                 final View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.grid_view_page_3, container, false);
                 final CircledImageView settingsButton = (CircledImageView) view.findViewById(R.id.settings_list);
 
@@ -363,7 +363,7 @@ public class WearMainActivity extends WearableActivity implements GoogleApiClien
                 textView.setText(getString(R.string.set_type));
                 container.addView(view);
                 return view;
-            }*/ else if (col == 2) {
+            } else if (col == 3) {
                 final View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.grid_view_page_4, container, false);
                 final CircledImageView smartPhoneButton = (CircledImageView) view.findViewById(R.id.smartphone);
 
