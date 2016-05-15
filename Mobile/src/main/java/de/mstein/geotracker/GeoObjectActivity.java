@@ -1,6 +1,7 @@
 package de.mstein.geotracker;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -8,6 +9,18 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.esri.arcgisruntime.geometry.GeometryEngine;
+import com.esri.arcgisruntime.geometry.Point;
+import com.esri.arcgisruntime.geometry.SpatialReferences;
+import com.esri.arcgisruntime.mapping.Basemap;
+import com.esri.arcgisruntime.mapping.Map;
+import com.esri.arcgisruntime.mapping.Viewpoint;
+import com.esri.arcgisruntime.mapping.view.Graphic;
+import com.esri.arcgisruntime.mapping.view.GraphicsOverlay;
+import com.esri.arcgisruntime.mapping.view.MapView;
+import com.esri.arcgisruntime.symbology.SimpleMarkerSymbol;
+import com.esri.arcgisruntime.symbology.SimpleRenderer;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -22,6 +35,11 @@ public class GeoObjectActivity extends AppCompatActivity {
     EditText mNameText, mDescriptionText;
     TextView mTypeText, mDateText;
     FeatureHandler fh;
+
+    private MapView mMapView;
+    private Map mMainMap;
+    private GraphicsOverlay grOverlay;
+    private Graphic locationGraphic;
 
     private static final SimpleDateFormat DATE_FORMAT =
             new SimpleDateFormat("dd.MM.yyyy - HH:mm:ss", Locale.GERMANY);
@@ -56,6 +74,23 @@ public class GeoObjectActivity extends AppCompatActivity {
         mDateText.setText(DATE_FORMAT.format(d));
         mDescriptionText.setText(String.valueOf(mGeoObject.getDescription()));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        // create map
+        mMapView = (MapView) findViewById(R.id.mapView);
+        mMainMap = new Map(Basemap.createLightGrayCanvas());
+        mMainMap.setInitialViewpoint(new Viewpoint(mGeoObject.getLat(), mGeoObject.getLon() , 16));
+        mMapView.setMap(mMainMap);
+        grOverlay = new GraphicsOverlay();
+        SimpleRenderer simpleRenderer = new SimpleRenderer();
+        SimpleMarkerSymbol pointSymbol = new SimpleMarkerSymbol(Color.RED, 10, SimpleMarkerSymbol.Style.CIRCLE);
+        simpleRenderer.setSymbol(pointSymbol);
+        grOverlay.setRenderer(simpleRenderer);
+        mMapView.getGraphicsOverlays().add(grOverlay);
+        locationGraphic = new Graphic();
+        Point point = new Point(mGeoObject.getLon(), mGeoObject.getLat(), SpatialReferences.getWgs84());
+        Point projectedPoint = (Point) GeometryEngine.project(point, SpatialReferences.getWebMercator());
+        locationGraphic.setGeometry(projectedPoint);
+        grOverlay.getGraphics().add(locationGraphic);
     }
 
     public void completeSaveAction(final boolean b) {

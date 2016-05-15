@@ -50,9 +50,9 @@
                 android:id="@+id/set_type"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:onClick="changeDatatype"
-                android:text="@string/change_type_button"
-                android:layout_weight="1" />
+                android:text="@string/change_type_button" />
         </LinearLayout>
 
         <TextView
@@ -122,11 +122,10 @@
 
     </LinearLayout>
 
-    <!--<com.esri.arcgisruntime.mapping.view.MapView
+    <com.esri.arcgisruntime.mapping.view.MapView
         android:id="@+id/mapView"
         android:layout_width="match_parent"
-        android:layout_height="50%"
-        android:layout_weight="1">
-    </com.esri.arcgisruntime.mapping.view.MapView>-->
+        android:layout_height="0dp"
+        android:layout_weight="1"></com.esri.arcgisruntime.mapping.view.MapView>
 </LinearLayout>
 
