@@ -1,75 +1,94 @@
 package de.mstein.geotracker;
 
-import com.esri.android.map.ags.ArcGISFeatureLayer;
-import com.esri.core.geometry.Geometry;
-import com.esri.core.geometry.Point;
-import com.esri.core.map.CallbackListener;
-import com.esri.core.map.FeatureEditResult;
-import com.esri.core.map.FeatureTemplate;
-import com.esri.core.map.FeatureType;
-import com.esri.core.map.Graphic;
-import com.esri.core.symbol.Symbol;
+import com.esri.arcgisruntime.concurrent.ListenableFuture;
+import com.esri.arcgisruntime.datasource.Feature;
+import com.esri.arcgisruntime.datasource.arcgis.FeatureTemplate;
+import com.esri.arcgisruntime.datasource.arcgis.FeatureType;
+import com.esri.arcgisruntime.datasource.arcgis.ServiceFeatureTable;
+import com.esri.arcgisruntime.geometry.Point;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 import de.mstein.shared.GeoObject;
 
 /**
  * Created by Mattes on 05.12.2015.
  */
-public class FeatureHandler implements CallbackListener<FeatureEditResult[][]> {
+public class FeatureHandler {
 
     GeoObjectActivity geoObjectActivity;
+    GeoObject go;
 
-    private ArcGISFeatureLayer featureLayer;
+    private ServiceFeatureTable featureTable;
     private static String FEATURE_SERVICE_URL = "http://services5.arcgis.com/WQdAIjtIvpizzS3U/arcgis/rest/services/XErleben/FeatureServer/0";
 
     public FeatureHandler(GeoObjectActivity goa) {
         geoObjectActivity = goa;
-        featureLayer = new ArcGISFeatureLayer(FEATURE_SERVICE_URL, new ArcGISFeatureLayer.Options());
+        featureTable = new ServiceFeatureTable(FEATURE_SERVICE_URL);
+        featureTable.loadAsync();
     }
 
-    public void createFeature(GeoObject go) {
-        Point point = new Point(go.getLon(), go.getLat());
-        if (featureLayer != null) {
-            FeatureType[] types = featureLayer.getTypes();
-            if (types != null) {
-                List<FeatureTemplate> templates = new ArrayList<FeatureTemplate>();
-                for (FeatureType type : types) {
-                    FeatureTemplate[] t = type.getTemplates();
-                    templates.addAll(new ArrayList<FeatureTemplate>(Arrays.asList(t)));
-                }
-                for (FeatureTemplate template : templates) {
-                    if (template.getName().equals(go.getType())) {
-                        Graphic newFeatureGraphic = featureLayer.createFeatureWithTemplate(template, point);
-                        Geometry geometry = newFeatureGraphic.getGeometry();
-                        Symbol symbol = newFeatureGraphic.getSymbol();
-                        Map attributes = newFeatureGraphic.getAttributes();
-                        attributes.put("O_NAME", go.getName());
-                        attributes.put("O_UUID", "go_" + new Date().getTime());
-                        attributes.put("M_BEARBTAM", new Date());
-                        attributes.put("M_LEBZSTAR", new Date(go.getDate()));
-                        attributes.put("M_INFOQUEL", "Anwender");
-                        attributes.put("M_PFLGSTEL", "GeoTracker");
-                        attributes.put("I_BESCHR", go.getDescription());
-                        Graphic g = new Graphic(geometry, symbol, attributes);
-                        Graphic[] adds = {g};
-                        featureLayer.applyEdits(adds, null, null, this);
+    public void createFeature(final GeoObject go) {
+        this.go = go;
+        featureTable.addDoneLoadingListener(new Runnable() {
+            @Override
+            public void run() {
+                Point point = new Point(go.getLon(), go.getLat());
+                if (featureTable.isEditable()) {
+                    List<FeatureType> types = featureTable.getFeatureTypes();
+                    if (types != null) {
+                        List<FeatureTemplate> templates = new ArrayList<FeatureTemplate>();
+                        for (FeatureType type : types) {
+                            List<FeatureTemplate> t = type.getTemplates();
+                            templates.addAll(t);
+                        }
+                        for (FeatureTemplate template : templates) {
+                            if (template.getName().equals(go.getType())) {
+                                Feature feature = featureTable.createFeature(template, point);
+                                java.util.Map<String, Object> attributes = feature.getAttributes();
+                                Date date = new Date();
+                                attributes.put("O_NAME", go.getName());
+                                attributes.put("O_UUID", "go_" + date.getTime());
+                                //attributes.put("M_BEARBTAM", date);
+                                //attributes.put("M_LEBZSTAR", new Date(go.getDate()));
+                                attributes.put("M_INFOQUEL", "Anwender");
+                                attributes.put("M_PFLGSTEL", "GeoTracker");
+                                attributes.put("I_BESCHR", go.getDescription());
+                                feature = featureTable.createFeature(attributes, point);
+                                //add the new feature
+                                final ListenableFuture<Boolean> result = featureTable.addFeatureAsync(feature);
+
+                                result.addDoneListener(new Runnable() {
+
+                                    @Override
+                                    public void run() {
+                                        //was it successful?
+                                        try {
+                                            if (result.get() == true) {
+                                                geoObjectActivity.completeSaveAction(true);
+                                            }
+                                        } catch (InterruptedException e) {
+                                            // Code to catch exception
+                                            e.printStackTrace();
+                                            geoObjectActivity.completeSaveAction(false);
+                                        } catch (ExecutionException e) {
+                                            // Code to catch exception
+                                            e.printStackTrace();
+                                            geoObjectActivity.completeSaveAction(false);
+                                        }
+                                    }
+                                });
+
+                                //apply edits to the server
+                                featureTable.applyEditsAsync();
+                            }
+                        }
                     }
                 }
             }
-        }
-    }
-
-    public void onError(Throwable error) {
-        geoObjectActivity.completeSaveAction(null);
-    }
-
-    public void onCallback(FeatureEditResult[][] editResult) {
-        geoObjectActivity.completeSaveAction(editResult);
+        });
     }
 }

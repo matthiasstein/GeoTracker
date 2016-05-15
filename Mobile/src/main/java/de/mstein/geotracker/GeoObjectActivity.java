@@ -9,8 +9,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.esri.core.map.FeatureEditResult;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -60,20 +58,14 @@ public class GeoObjectActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    public void completeSaveAction(final FeatureEditResult[][] results) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (results != null) {
-                    if (results[0][0].isSuccess()) {
-                        Toast.makeText(GeoObjectActivity.this, R.string.upload_success, Toast.LENGTH_SHORT).show();
-                        MainActivity.geoObjectList.remove(i);
-                    } else {
-                        Toast.makeText(GeoObjectActivity.this, R.string.upload_error, Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-        });
+    public void completeSaveAction(final boolean b) {
+        if (b == true) {
+            Toast.makeText(GeoObjectActivity.this, R.string.upload_success, Toast.LENGTH_SHORT).show();
+            MainActivity.geoObjectList.remove(i);
+        } else {
+            Toast.makeText(GeoObjectActivity.this, R.string.upload_error, Toast.LENGTH_SHORT).show();
+        }
+
         finish();
     }
 
