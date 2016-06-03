@@ -51,13 +51,13 @@ public class WearMainActivity extends WearableActivity implements GoogleApiClien
             new SimpleDateFormat("HH:mm", Locale.US);
 
     private GoogleApiClient mGoogleApiClient;
+    private Location mLastLocation;
+    private LocationRequest mLocationRequest;
     private Node mNode;
     private BoxInsetLayout mContainerView;
     private TextView mClockView;
     private Handler mHandler = new Handler();
     private View mDot, mRecButton, mRecButtonDisabled;
-
-    private double lat, lon;
 
     private static final long UPDATE_INTERVAL_MS = 5 * 1000;
     private static final long FASTEST_INTERVAL_MS = 5 * 1000;
@@ -135,7 +135,7 @@ public class WearMainActivity extends WearableActivity implements GoogleApiClien
         String description = pref.getString(PREFS_DESC_KEY, "");
         String type = pref.getString(PREFS_TYPE_KEY, "GeoObject");
         String name = "Neuer POI";
-        saveGeoObject(lat, lon, name, type, description);
+        saveGeoObject(mLastLocation.getLatitude(), mLastLocation.getLongitude(), name, type, description);
         showOpenOnPhoneConfirmationActivity(getString(R.string.sent_to_phone));
     }
 
@@ -143,7 +143,7 @@ public class WearMainActivity extends WearableActivity implements GoogleApiClien
         Intent intent = new Intent(this, ConfirmationActivity.class);
         intent.putExtra(ConfirmationActivity.EXTRA_ANIMATION_TYPE,
                 ConfirmationActivity.OPEN_ON_PHONE_ANIMATION);
-        intent.putExtra(ConfirmationActivity.EXTRA_MESSAGE,s);
+        intent.putExtra(ConfirmationActivity.EXTRA_MESSAGE, s);
         startActivity(intent);
     }
 
@@ -163,13 +163,13 @@ public class WearMainActivity extends WearableActivity implements GoogleApiClien
             return;
         }
 
-        LocationRequest locationRequest = LocationRequest.create()
+        mLocationRequest = LocationRequest.create()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
                 .setInterval(UPDATE_INTERVAL_MS)
                 .setFastestInterval(FASTEST_INTERVAL_MS);
 
         LocationServices.FusedLocationApi
-                .requestLocationUpdates(mGoogleApiClient, locationRequest, this)
+                .requestLocationUpdates(mGoogleApiClient, mLocationRequest, this)
                 .setResultCallback(new ResultCallback<Status>() {
 
                     @Override
@@ -209,8 +209,7 @@ public class WearMainActivity extends WearableActivity implements GoogleApiClien
     @Override
     public void onLocationChanged(Location location) {
         updateVisibility(true);
-        lat = location.getLatitude();
-        lon = location.getLongitude();
+        mLastLocation = location;
     }
 
     /**
