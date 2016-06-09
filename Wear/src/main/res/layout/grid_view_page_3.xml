@@ -23,7 +23,7 @@
         android:layout_gravity="center|center"
         android:layout_marginTop="50dp"
         android:fontFamily="sans-serif-light"
-        android:text="@string/app_name"
+        android:text="@string/set_type"
         android:textColor="@color/white"
         android:textSize="14sp"
         android:textStyle="italic" />

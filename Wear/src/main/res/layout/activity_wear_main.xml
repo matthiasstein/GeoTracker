@@ -6,7 +6,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color1">
+    android:background="@color/color1"
     tools:context="de.mstein.geotracker.WearMainActivity"
     tools:deviceIds="wear">
 

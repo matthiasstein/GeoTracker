@@ -341,8 +341,6 @@ public class WearMainActivity extends WearableActivity implements GoogleApiClien
                     }
                 });
 
-                final TextView textView = (TextView) view.findViewById(R.id.textView);
-                textView.setText(getString(R.string.set_description));
                 container.addView(view);
                 return view;
             } else if (col == 2) {
@@ -358,8 +356,6 @@ public class WearMainActivity extends WearableActivity implements GoogleApiClien
                     }
                 });
 
-                final TextView textView = (TextView) view.findViewById(R.id.textView);
-                textView.setText(getString(R.string.set_type));
                 container.addView(view);
                 return view;
             } else if (col == 3) {
@@ -373,8 +369,6 @@ public class WearMainActivity extends WearableActivity implements GoogleApiClien
                     }
                 });
 
-                final TextView textView = (TextView) view.findViewById(R.id.textView);
-                textView.setText(getString(R.string.open_on_phone));
                 container.addView(view);
                 return view;
             } else {

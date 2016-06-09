@@ -35,7 +35,7 @@
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
-        <activity android:name=".VoiceInputActivity"></activity>
-        <activity android:name="android.support.wearable.activity.ConfirmationActivity"></activity>
+        <activity android:name=".VoiceInputActivity"/>
+        <activity android:name="android.support.wearable.activity.ConfirmationActivity"/>
     </application>
 </manifest>
