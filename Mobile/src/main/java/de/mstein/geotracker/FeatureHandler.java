@@ -1,10 +1,12 @@
 package de.mstein.geotracker;
 
+import com.esri.arcgisruntime.ArcGISRuntimeException;
 import com.esri.arcgisruntime.concurrent.ListenableFuture;
-import com.esri.arcgisruntime.datasource.Feature;
-import com.esri.arcgisruntime.datasource.arcgis.FeatureTemplate;
-import com.esri.arcgisruntime.datasource.arcgis.FeatureType;
-import com.esri.arcgisruntime.datasource.arcgis.ServiceFeatureTable;
+import com.esri.arcgisruntime.data.Feature;
+import com.esri.arcgisruntime.data.FeatureEditResult;
+import com.esri.arcgisruntime.data.FeatureTemplate;
+import com.esri.arcgisruntime.data.FeatureType;
+import com.esri.arcgisruntime.data.ServiceFeatureTable;
 import com.esri.arcgisruntime.geometry.Point;
 
 import java.util.ArrayList;
@@ -37,7 +39,7 @@ public class FeatureHandler {
             @Override
             public void run() {
                 Point point = new Point(go.getLon(), go.getLat());
-                if (featureTable.isEditable()) {
+                if (featureTable.canAdd()) {
                     List<FeatureType> types = featureTable.getFeatureTypes();
                     if (types != null) {
                         List<FeatureTemplate> templates = new ArrayList<FeatureTemplate>();
@@ -59,31 +61,49 @@ public class FeatureHandler {
                                 attributes.put("I_BESCHR", go.getDescription());
                                 feature = featureTable.createFeature(attributes, point);
                                 //add the new feature
-                                final ListenableFuture<Boolean> result = featureTable.addFeatureAsync(feature);
-
-                                result.addDoneListener(new Runnable() {
-
+                                final ListenableFuture<Void> addFeatureFuture = featureTable.addFeatureAsync(feature);
+                                addFeatureFuture.addDoneListener(new Runnable() {
                                     @Override
                                     public void run() {
-                                        //was it successful?
                                         try {
-                                            if (result.get() == true) {
-                                                geoObjectActivity.completeSaveAction(true);
+                                            // check the result of the future to find out if/when the addFeatureAsync call succeeded - exception will be
+                                            // thrown if the edit failed
+                                            addFeatureFuture.get();
+
+                                            // if using an ArcGISFeatureTable, call getAddedFeaturesCountAsync to check the total number of features
+                                            // that have been added since last sync
+
+                                            // if dealing with ServiceFeatureTable, apply edits after making updates; if editing locally, then edits can
+                                            // be synchronized at some point using the SyncGeodatabaseTask.
+                                            if (featureTable instanceof ServiceFeatureTable) {
+                                                ServiceFeatureTable serviceFeatureTable = (ServiceFeatureTable)featureTable;
+                                                // apply the edits
+                                                final ListenableFuture<List<FeatureEditResult>> applyEditsFuture = serviceFeatureTable.applyEditsAsync();
+                                                applyEditsFuture.addDoneListener(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        try {
+                                                            final List<FeatureEditResult> featureEditResults = applyEditsFuture.get();
+                                                            geoObjectActivity.completeSaveAction(true);
+                                                        } catch (InterruptedException | ExecutionException e) {
+                                                            e.printStackTrace();
+                                                            geoObjectActivity.completeSaveAction(false);
+                                                        }
+                                                    }
+                                                });
                                             }
-                                        } catch (InterruptedException e) {
-                                            // Code to catch exception
-                                            e.printStackTrace();
-                                            geoObjectActivity.completeSaveAction(false);
-                                        } catch (ExecutionException e) {
-                                            // Code to catch exception
-                                            e.printStackTrace();
-                                            geoObjectActivity.completeSaveAction(false);
+
+                                        } catch (InterruptedException | ExecutionException e) {
+                                            // executionException may contain an ArcGISRuntimeException with edit error information.
+                                            if (e.getCause() instanceof ArcGISRuntimeException) {
+                                                ArcGISRuntimeException agsEx = (ArcGISRuntimeException)e.getCause();
+                                            } else {
+                                                e.printStackTrace();
+                                                geoObjectActivity.completeSaveAction(false);
+                                            }
                                         }
                                     }
                                 });
-
-                                //apply edits to the server
-                                featureTable.applyEditsAsync();
                             }
                         }
                     }
